@@ -99,6 +99,18 @@ export default function NewsModal({ news, onClose }: Props) {
           {news.title}
         </h2>
 
+        {news.originalTitle && (
+          <p
+            dir="ltr"
+            className="mt-2 text-sm leading-relaxed text-neutral-500"
+          >
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-neutral-600">
+              Original:&nbsp;
+            </span>
+            {news.originalTitle}
+          </p>
+        )}
+
         {news.image && (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -112,6 +124,22 @@ export default function NewsModal({ news, onClose }: Props) {
         <p className="mt-5 text-base leading-relaxed text-neutral-300">
           {news.summary || "لا يوجد ملخص متاح لهذا الخبر."}
         </p>
+
+        {news.originalSummary &&
+          news.originalSummary.trim() !== "" &&
+          news.originalSummary !== news.originalTitle && (
+            <details className="mt-4 rounded-xl border border-white/5 bg-ink-900/50 p-4">
+              <summary className="cursor-pointer text-xs font-semibold tracking-wider text-neutral-400 hover:text-gold">
+                عرض الملخّص الأصلي بالإنجليزية
+              </summary>
+              <p
+                dir="ltr"
+                className="mt-3 text-sm leading-relaxed text-neutral-400"
+              >
+                {news.originalSummary}
+              </p>
+            </details>
+          )}
 
         <div className="mt-6 grid gap-3 rounded-xl border border-white/5 bg-ink-900/50 p-4 text-sm sm:grid-cols-2">
           <Field label="المصدر" value={news.source} />

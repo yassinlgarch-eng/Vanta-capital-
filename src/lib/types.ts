@@ -63,6 +63,10 @@ export type LiveNewsItem = {
   url?: string;
   image?: string;
   isBreaking?: boolean;
+  /** Original (English) title — kept when we generated an Arabic gloss */
+  originalTitle?: string;
+  /** Original (English) summary — kept when we generated an Arabic gloss */
+  originalSummary?: string;
 };
 
 export type NewsResponse = {
