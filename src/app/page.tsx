@@ -1,11 +1,9 @@
 import Link from "next/link";
-import MarketTickerCard from "@/components/MarketTickerCard";
-import NewsCard from "@/components/NewsCard";
+import LiveMarketTicker from "@/components/LiveMarketTicker";
+import LiveNewsList from "@/components/LiveNewsList";
 import FeatureCard from "@/components/FeatureCard";
 import LessonCard from "@/components/LessonCard";
 import BookCard from "@/components/BookCard";
-import { heroMarkets } from "@/data/markets";
-import { newsItems } from "@/data/news";
 import { academySections, homeFeatures } from "@/data/academy";
 import { books } from "@/data/library";
 
@@ -111,32 +109,11 @@ export default function HomePage() {
 
             {/* يمين - بطاقات أسعار حية */}
             <div className="relative lg:col-span-5">
-              <div className="gradient-border p-6">
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-bull" />
-                    <span className="text-xs font-semibold tracking-wider text-neutral-300">
-                      الأسواق الآن
-                    </span>
-                  </div>
-                  <span className="font-mono text-[10px] text-neutral-500">
-                    LIVE · بيانات تجريبية
-                  </span>
-                </div>
-                <div className="mt-4 space-y-2">
-                  {heroMarkets.map((tick) => (
-                    <MarketTickerCard
-                      key={tick.symbol}
-                      tick={tick}
-                      variant="compact"
-                    />
-                  ))}
-                </div>
-                <p className="mt-4 text-center text-[10px] leading-relaxed text-neutral-600">
-                  {/* TODO: ربط API لتحديث الأسعار في الوقت الفعلي */}
-                  الأسعار المعروضة تجريبية — سيتم ربط API مباشر قريباً
-                </p>
-              </div>
+              <LiveMarketTicker
+                variant="compact"
+                limit={6}
+                refreshMs={45_000}
+              />
             </div>
           </div>
         </div>
@@ -171,13 +148,12 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          <div className="md:col-span-2 lg:row-span-2">
-            <NewsCard news={newsItems[0]} variant="featured" />
-          </div>
-          {newsItems.slice(1, 5).map((item) => (
-            <NewsCard key={item.id} news={item} />
-          ))}
+        <div className="mt-10">
+          <LiveNewsList
+            showFilters={false}
+            limit={5}
+            refreshMs={10 * 60_000}
+          />
         </div>
       </section>
 

@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
-import MarketTickerCard from "@/components/MarketTickerCard";
-import { stockIndices } from "@/data/markets";
+import LiveMarketTicker from "@/components/LiveMarketTicker";
+import RiskNotice from "@/components/RiskNotice";
 
 export const metadata = {
   title: "الأسهم - المؤشرات والشركات",
@@ -21,16 +21,13 @@ export default function StocksPage() {
         {/* مؤشرات وأسهم */}
         <div className="mb-6 flex items-end justify-between">
           <h2 className="section-title text-3xl">المؤشرات والأسهم</h2>
-          <span className="font-mono text-xs text-neutral-500">
-            بيانات تجريبية
-          </span>
         </div>
-        {/* TODO: ربط API للأسهم العالمية */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {stockIndices.map((stock) => (
-            <MarketTickerCard key={stock.symbol} tick={stock} />
-          ))}
-        </div>
+        <LiveMarketTicker
+          categories={["indices", "stocks"]}
+          variant="default"
+          showHeader={false}
+          refreshMs={45_000}
+        />
 
         {/* شرح للمستثمرين */}
         <div className="mt-16 grid gap-6 lg:grid-cols-2">
@@ -113,6 +110,8 @@ export default function StocksPage() {
             ))}
           </div>
         </div>
+
+        <RiskNotice />
       </section>
     </>
   );

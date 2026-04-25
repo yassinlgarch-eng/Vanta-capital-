@@ -1,7 +1,11 @@
 import type { MarketTick } from "@/data/markets";
+import type { LiveMarketTick } from "@/lib/types";
+
+// Accept both the legacy static MarketTick and the live API tick shape.
+type AnyTick = MarketTick | LiveMarketTick;
 
 type Props = {
-  tick: MarketTick;
+  tick: AnyTick;
   variant?: "default" | "compact";
 };
 
