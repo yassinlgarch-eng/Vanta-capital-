@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================
+   Vanta Capital - Global Styles
+   تصميم فاخر داكن بهوية مالية عربية
+   =========================================================== */
+
+:root {
+  --color-bg: #050B14;
+  --color-bg-elevated: #07111F;
+  --color-navy: #0A2540;
+  --color-gold: #D4AF37;
+  --color-gold-light: #F5D77A;
+  --color-electric: #2563EB;
+  --color-text: #F8FAFC;
+  --color-text-muted: #94A3B8;
+  --color-bull: #22C55E;
+  --color-bear: #EF4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-feature-settings: "kern", "liga", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+    linear-gradient(180deg, #050B14 0%, #07111F 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Selection */
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07111F;
+}
+::-webkit-scrollbar-thumb {
+  background: #1A2D47;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2A3D57;
+}
+
+/* أرقام عربية للأسعار - نستخدم أرقام لاتينية للوضوح المالي */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===========================================================
+   مكونات قابلة لإعادة الاستخدام (Layer Components)
+   =========================================================== */
+@layer components {
+  .container-custom {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* بطاقة موحدة بالتصميم الفاخر */
+  .card {
+    @apply relative rounded-2xl border border-white/5 bg-ink-900/60 backdrop-blur-sm transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:border-gold/30 hover:shadow-card-hover hover:-translate-y-0.5;
+  }
+
+  /* زر أساسي ذهبي */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-gold px-6 py-3 text-sm font-semibold text-ink-950 shadow-gold transition-all duration-300 hover:shadow-gold-strong hover:scale-[1.02] active:scale-[0.98];
+  }
+
+  /* زر ثانوي شفاف */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-neutral-50 backdrop-blur-sm transition-all duration-300 hover:border-gold/40 hover:bg-white/10;
+  }
+
+  /* تسمية تصنيف */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-neutral-400 transition-colors;
+  }
+
+  .chip-gold {
+    @apply border-gold/30 bg-gold/10 text-gold;
+  }
+
+  .chip-bull {
+    @apply border-bull/30 bg-bull/10 text-bull;
+  }
+
+  .chip-bear {
+    @apply border-bear/30 bg-bear/10 text-bear;
+  }
+
+  .chip-breaking {
+    @apply border-bear/40 bg-bear/15 text-bear;
+  }
+
+  /* عنوان قسم */
+  .section-eyebrow {
+    @apply mb-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-gold;
+  }
+
+  .section-title {
+    @apply font-display text-3xl font-bold leading-tight text-neutral-50 sm:text-4xl md:text-5xl;
+  }
+
+  .section-subtitle {
+    @apply mt-4 max-w-2xl text-base leading-relaxed text-neutral-400 sm:text-lg;
+  }
+
+  /* خط ذهبي زخرفي */
+  .gold-divider {
+    @apply h-px bg-gradient-to-l from-transparent via-gold/40 to-transparent;
+  }
+
+  /* بطاقة بإطار متدرج */
+  .gradient-border {
+    position: relative;
+    background: linear-gradient(180deg, #07111F 0%, #0A1628 100%);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.3) 0%, rgba(212, 175, 55, 0) 100%);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* ===========================================================
+   Animations
+   =========================================================== */
+.animate-stagger > * {
+  opacity: 0;
+  animation: fadeUp 0.7s ease-out forwards;
+}
+.animate-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.animate-stagger > *:nth-child(2) { animation-delay: 0.15s; }
+.animate-stagger > *:nth-child(3) { animation-delay: 0.25s; }
+.animate-stagger > *:nth-child(4) { animation-delay: 0.35s; }
+.animate-stagger > *:nth-child(5) { animation-delay: 0.45s; }
+.animate-stagger > *:nth-child(6) { animation-delay: 0.55s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* خلفية شبكية ناعمة للأقسام */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* RTL fix لبعض الأيقونات */
+[dir="rtl"] .flip-rtl {
+  transform: scaleX(-1);
+}
