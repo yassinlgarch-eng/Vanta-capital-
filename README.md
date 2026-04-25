@@ -12,12 +12,13 @@
 2. [خريطة الموقع](#خريطة-الموقع)
 3. [هيكل الملفات](#هيكل-الملفات)
 4. [تشغيل المشروع محلياً](#تشغيل-المشروع-محلياً)
-5. [رفع المشروع على GitHub](#رفع-المشروع-على-github)
-6. [النشر على Vercel](#النشر-على-vercel)
-7. [النشر على Netlify](#النشر-على-netlify)
-8. [النشر على GitHub Pages](#النشر-على-github-pages)
-9. [ربط الدومين الخاص](#ربط-الدومين-الخاص)
-10. [خطة التطوير المستقبلية - TODO](#خطة-التطوير-المستقبلية)
+5. [البيانات الحية: الأسعار والأخبار](#البيانات-الحية-الأسعار-والأخبار)
+6. [رفع المشروع على GitHub](#رفع-المشروع-على-github)
+7. [النشر على Vercel](#النشر-على-vercel)
+8. [النشر على Netlify](#النشر-على-netlify)
+9. [النشر على GitHub Pages](#النشر-على-github-pages)
+10. [ربط الدومين الخاص](#ربط-الدومين-الخاص)
+11. [خطة التطوير المستقبلية - TODO](#خطة-التطوير-المستقبلية)
 
 ---
 
@@ -96,21 +97,35 @@ vanta-capital/
 │   │   ├── terms/page.tsx
 │   │   └── disclaimer/page.tsx
 │   │
+│   ├── app/api/                  # Route Handlers (Server-only)
+│   │   ├── markets/route.ts      # GET /api/markets
+│   │   └── news/route.ts         # GET /api/news
+│   │
 │   ├── components/               # المكونات المشتركة
 │   │   ├── Logo.tsx
 │   │   ├── Header.tsx
 │   │   ├── Footer.tsx
 │   │   ├── PageHeader.tsx
 │   │   ├── MarketTickerCard.tsx
+│   │   ├── LiveMarketTicker.tsx  # شريط الأسعار الحي + auto-refresh
 │   │   ├── NewsCard.tsx
+│   │   ├── LiveNewsList.tsx      # قائمة الأخبار الحية + فلترة
+│   │   ├── NewsModal.tsx         # نافذة "اقرأ المزيد" RTL
+│   │   ├── RiskNotice.tsx        # تنبيه إخلاء المسؤولية الموحّد
 │   │   ├── FeatureCard.tsx
 │   │   ├── LessonCard.tsx
 │   │   ├── BookCard.tsx
 │   │   └── PartnerCard.tsx
 │   │
-│   └── data/                     # البيانات التجريبية
-│       ├── markets.ts            # أسعار الأسواق
-│       ├── news.ts               # الأخبار
+│   ├── lib/                      # طبقة الخدمات (Server-only)
+│   │   ├── types.ts              # الأنواع المشتركة
+│   │   ├── marketApi.ts          # مزودو الأسعار
+│   │   ├── newsApi.ts            # مزودو الأخبار
+│   │   └── fallbackData.ts       # البيانات الاحتياطية
+│   │
+│   └── data/                     # البيانات الثابتة (تعليمية + احتياطية)
+│       ├── markets.ts            # تعريفات النوع الأساسي للأسعار
+│       ├── news.ts               # الأخبار التعليمية القديمة
 │       ├── academy.ts            # الأقسام التعليمية
 │       └── library.ts            # الكتب والشركاء وخطط VIP
 │
@@ -157,6 +172,101 @@ npm run build    # بناء نسخة الإنتاج
 npm run start    # تشغيل نسخة الإنتاج محلياً
 npm run lint     # فحص الكود
 ```
+
+---
+
+## البيانات الحية: الأسعار والأخبار
+
+قسم الأسواق وقسم الأخبار يدعمان الآن البث المباشر عبر مزودين خارجيين، مع طبقة
+تجريد قابلة للتبديل وبيانات احتياطية أنيقة عند غياب المفاتيح أو تعطّل المزود.
+
+### كيف يعمل النظام؟
+
+```
+المتصفح ──→ /api/markets أو /api/news (Next.js Route Handlers)
+              │
+              ├─→ src/lib/marketApi.ts  (Finnhub | Twelve Data | mock)
+              └─→ src/lib/newsApi.ts    (NewsAPI | GNews | MarketAux | mock)
+
+⚠️ المفاتيح تبقى على الخادم فقط. المتصفح لا يراها أبداً.
+```
+
+- مسارات `/api/markets` و `/api/news` تجلب البيانات من المزود المختار وتعيدها
+  للواجهة، مع تخزين مؤقت (30 ثانية للأسعار، 5 دقائق للأخبار).
+- إذا لم يُضبط مفتاح API أو فشل المزود، يتم عرض بيانات تجريبية مع تنبيه ظاهر:
+  *«البيانات المعروضة تجريبية. سيتم تفعيل البث الحي بعد ربط مزود البيانات.»*
+- الواجهة تتحدّث تلقائياً: الأسعار كل ~45 ثانية، الأخبار كل 7–10 دقائق.
+
+### المزودون المدعومون
+
+| القسم | القيمة (ENV) | الموقع | ملاحظات |
+|-------|--------------|--------|---------|
+| الأسعار | `finnhub` | https://finnhub.io | خطة مجانية كافية، تدعم الفوركس والكريبتو والأسهم. |
+| الأسعار | `twelvedata` | https://twelvedata.com | يدعم استعلام دفعة واحدة، رموز قياسية مثل `EUR/USD`. |
+| الأسعار | `mock` | — | يعرض البيانات التجريبية فقط (الافتراضي). |
+| الأخبار | `newsapi` | https://newsapi.org | تصنيف business، باللغة الإنجليزية. |
+| الأخبار | `gnews` | https://gnews.io | بديل خفيف لـ NewsAPI. |
+| الأخبار | `marketaux` | https://www.marketaux.com | مخصّص للأخبار المالية. |
+| الأخبار | `mock` | — | يعرض الأخبار التجريبية فقط (الافتراضي). |
+
+> 💡 يمكن إضافة مزودين جدد بسهولة عبر `src/lib/marketApi.ts` و `src/lib/newsApi.ts`.
+> كل مزود مجرّد عبر دالة واحدة تُعيد نفس الشكل المعياري `LiveMarketTick` /
+> `LiveNewsItem`.
+
+### المتغيرات المطلوبة
+
+انسخ الملف المثال:
+
+```bash
+cp .env.example .env.local
+```
+
+ثم عدّل القيم:
+
+```bash
+# أسعار الأسواق
+MARKET_API_PROVIDER=finnhub          # أو twelvedata أو mock
+MARKET_API_KEY=YOUR_FINNHUB_KEY
+
+# الأخبار
+NEWS_API_PROVIDER=newsapi            # أو gnews أو marketaux أو mock
+NEWS_API_KEY=YOUR_NEWSAPI_KEY
+```
+
+### إضافة المفاتيح في Vercel
+
+1. افتح مشروعك في [Vercel Dashboard](https://vercel.com/dashboard).
+2. **Settings → Environment Variables**.
+3. أضف كل مفتاح من المتغيرات الأربعة أعلاه (Production + Preview + Development).
+4. بعد الحفظ، أعد النشر (**Deployments → Redeploy**).
+
+> 🛡️ المفاتيح تبقى على الخادم. لا تستخدم البادئة `NEXT_PUBLIC_` مع مفاتيح APIs،
+> لأنها ستُسرَّب إلى المتصفح. اتركها بدون بادئة كما هي.
+
+### اختبار محلياً
+
+```bash
+# 1) شغّل المشروع بدون مفاتيح — ستظهر البيانات التجريبية مع تنبيه واضح
+npm run dev
+
+# 2) أضف مفاتيحك في .env.local وأعد التشغيل لرؤية البث الحي
+npm run dev
+```
+
+نقاط نهاية الاختبار المباشر:
+
+```
+http://localhost:3000/api/markets
+http://localhost:3000/api/news
+```
+
+كلاهما يُرجع JSON يحتوي `data`، `source: "live" | "fallback"`، `provider`،
+و `fetchedAt`.
+
+### ⚠️ تنبيه قانوني
+
+المعلومات والأسعار المعروضة لأغراض تعليمية وإخبارية فقط، وليست توصية مالية أو
+دعوة للبيع أو الشراء. الأسعار قد تتأخر حسب مزود البيانات.
 
 ---
 

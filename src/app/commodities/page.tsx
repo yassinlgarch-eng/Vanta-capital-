@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
-import MarketTickerCard from "@/components/MarketTickerCard";
-import { commodities } from "@/data/markets";
+import LiveMarketTicker from "@/components/LiveMarketTicker";
+import RiskNotice from "@/components/RiskNotice";
 
 export const metadata = {
   title: "السلع - الذهب، النفط، الفضة",
@@ -20,16 +20,13 @@ export default function CommoditiesPage() {
       <section className="container-custom py-12">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="section-title text-3xl">أسعار السلع</h2>
-          <span className="font-mono text-xs text-neutral-500">
-            بيانات تجريبية
-          </span>
         </div>
-        {/* TODO: ربط API لأسعار السلع المباشرة */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {commodities.map((c) => (
-            <MarketTickerCard key={c.symbol} tick={c} />
-          ))}
-        </div>
+        <LiveMarketTicker
+          categories={["commodities"]}
+          variant="default"
+          showHeader={false}
+          refreshMs={45_000}
+        />
 
         {/* شروحات عن كل سلعة */}
         <div className="mt-16 space-y-6">
@@ -84,6 +81,8 @@ export default function CommoditiesPage() {
             </div>
           ))}
         </div>
+
+        <RiskNotice />
       </section>
     </>
   );

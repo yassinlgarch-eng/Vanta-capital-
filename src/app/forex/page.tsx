@@ -1,6 +1,6 @@
 import PageHeader from "@/components/PageHeader";
-import MarketTickerCard from "@/components/MarketTickerCard";
-import { forexPairs } from "@/data/markets";
+import LiveMarketTicker from "@/components/LiveMarketTicker";
+import RiskNotice from "@/components/RiskNotice";
 
 export const metadata = {
   title: "الفوركس - الأسواق العالمية",
@@ -64,16 +64,13 @@ export default function ForexPage() {
         <div className="mt-14">
           <div className="mb-6 flex items-end justify-between">
             <h2 className="section-title text-3xl">الأزواج الرئيسية</h2>
-            <span className="font-mono text-xs text-neutral-500">
-              بيانات تجريبية
-            </span>
           </div>
-          {/* TODO: ربط API لأسعار الفوركس المباشرة */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {forexPairs.map((pair) => (
-              <MarketTickerCard key={pair.symbol} tick={pair} />
-            ))}
-          </div>
+          <LiveMarketTicker
+            categories={["forex"]}
+            variant="default"
+            showHeader={false}
+            refreshMs={45_000}
+          />
         </div>
 
         {/* مقالات تعليمية */}
@@ -120,6 +117,8 @@ export default function ForexPage() {
             ))}
           </div>
         </div>
+
+        <RiskNotice />
       </section>
     </>
   );
