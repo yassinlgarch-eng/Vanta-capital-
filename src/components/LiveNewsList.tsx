@@ -175,12 +175,36 @@ export default function LiveNewsList({
         </div>
       )}
 
-      {/* Empty */}
+      {/* Empty — distinguishes "no recent live news" from "no items in tab" */}
       {state.status === "ready" && filtered.length === 0 && (
         <div className="mt-16 rounded-2xl border border-white/5 bg-ink-900/40 p-12 text-center">
-          <p className="text-neutral-400">
-            لا توجد أخبار حالياً ضمن هذا التصنيف.
+          <div className="mx-auto grid h-12 w-12 place-items-center rounded-xl border border-gold/20 bg-gold/5 text-gold">
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+          <p className="mt-4 text-base font-semibold text-neutral-200">
+            {state.source === "live" && state.data.length === 0
+              ? state.message ??
+                "لا توجد أخبار حديثة متاحة من مزود الأخبار حاليًا."
+              : "لا توجد أخبار حالياً ضمن هذا التصنيف."}
           </p>
+          {state.source === "live" && state.data.length === 0 && (
+            <p className="mt-2 text-xs text-neutral-500">
+              نراجع المصادر تلقائياً كل بضع دقائق — عُد لاحقاً.
+            </p>
+          )}
         </div>
       )}
 

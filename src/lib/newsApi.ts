@@ -8,6 +8,15 @@
 //   - marketaux    → https://www.marketaux.com
 //   - mock         → returns fallback data (default when no key)
 //
+// Pipeline applied to every provider's response:
+//   1) Drop items older than MAX_AGE_HOURS (default 72h).
+//   2) Classify English title/summary against financial topic rules.
+//      Items that don't match any financial rule are dropped.
+//   3) Generate an Arabic title + Arabic summary from the matched rule.
+//      Original English title/summary are preserved as `originalTitle`
+//      and `originalSummary` for context.
+//   4) Sort newest first; cap at MAX_ITEMS.
+//
 // IMPORTANT: This file must NEVER be imported in a client component.
 // API keys live in process.env and must stay server-side only.
 // ============================================================
@@ -18,6 +27,20 @@ import type {
   NewsResponse,
 } from "./types";
 import { fallbackNews } from "./fallbackData";
+import { classifyFinancial, detectBreaking } from "./translate";
+
+// Time window we consider "recent" for users — older items are dropped.
+const MAX_AGE_HOURS = 72;
+const MAX_ITEMS = 30;
+
+// Financial query reused across providers. Targets markets/forex/stocks/oil/
+// gold/central banks/Fed/inflation/commodities, while excluding generic
+// political news that's not market-impacting.
+const FINANCIAL_QUERY =
+  '("federal reserve" OR "central bank" OR "interest rate" OR inflation OR forex OR "stock market" OR "wall street" OR "S&P 500" OR nasdaq OR "Dow Jones" OR earnings OR "oil prices" OR opec OR brent OR "gold prices" OR commodities OR bitcoin OR ethereum OR cryptocurrency OR "treasury yield" OR "ECB" OR "Bank of England" OR "Bank of Japan" OR "PBOC" OR yuan OR yen)';
+
+const NO_RECENT_MSG =
+  "لا توجد أخبار حديثة متاحة من مزود الأخبار حاليًا.";
 
 // ───────────────────────────────────────────────────────────
 // Public entry point
@@ -38,7 +61,7 @@ export async function getNews(): Promise<NewsResponse> {
   }
 
   try {
-    const data =
+    const raw =
       provider === "newsapi"
         ? await fetchFromNewsApi(apiKey)
         : provider === "gnews"
@@ -47,42 +70,122 @@ export async function getNews(): Promise<NewsResponse> {
         ? await fetchFromMarketAux(apiKey)
         : null;
 
-    if (!data || data.length === 0) {
+    if (!raw) {
+      return fallbackResponse(provider);
+    }
+
+    const processed = processItems(raw);
+
+    if (processed.length === 0) {
+      // Provider replied successfully but nothing recent + financial passed.
       return {
-        data: fallbackNews,
-        source: "fallback",
+        data: [],
+        source: "live",
         provider,
         fetchedAt: new Date().toISOString(),
-        message:
-          "تعذّر جلب الأخبار من المزود الحالي. يتم عرض بيانات تجريبية مؤقتاً.",
+        message: NO_RECENT_MSG,
       };
     }
 
     return {
-      data,
+      data: processed,
       source: "live",
       provider,
       fetchedAt: new Date().toISOString(),
     };
   } catch (err) {
     console.error("[newsApi] provider failure:", err);
-    return {
-      data: fallbackNews,
-      source: "fallback",
-      provider,
-      fetchedAt: new Date().toISOString(),
-      message:
-        "حدث خطأ أثناء الاتصال بمزود الأخبار. يتم عرض بيانات تجريبية مؤقتاً.",
-    };
+    return fallbackResponse(provider);
   }
 }
 
+function fallbackResponse(provider: string): NewsResponse {
+  return {
+    data: fallbackNews,
+    source: "fallback",
+    provider,
+    fetchedAt: new Date().toISOString(),
+    message:
+      "تعذّر جلب الأخبار من المزود الحالي. يتم عرض بيانات تجريبية مؤقتاً.",
+  };
+}
+
 // ───────────────────────────────────────────────────────────
-// NewsAPI (newsapi.org)
+// Pipeline: filter recent → classify → translate → sort → cap
 // ───────────────────────────────────────────────────────────
-async function fetchFromNewsApi(apiKey: string): Promise<LiveNewsItem[]> {
-  const url =
-    "https://newsapi.org/v2/top-headlines?category=business&language=en&pageSize=24";
+type RawItem = {
+  id: string;
+  title: string;
+  summary: string;
+  source: string;
+  publishedAt: string;
+  url?: string;
+  image?: string;
+};
+
+function processItems(raw: RawItem[]): LiveNewsItem[] {
+  const cutoff = Date.now() - MAX_AGE_HOURS * 60 * 60 * 1000;
+  const items: LiveNewsItem[] = [];
+
+  for (const r of raw) {
+    if (!r.title || !r.url) continue;
+
+    const ts = new Date(r.publishedAt).getTime();
+    if (!Number.isFinite(ts) || ts < cutoff) continue;
+
+    const topic = classifyFinancial(r.title, r.summary);
+    if (!topic) continue; // Not financial → drop
+
+    items.push({
+      id: r.id,
+      title: topic.title,
+      summary: topic.summary,
+      category: topic.category,
+      source: r.source,
+      publishedAt: r.publishedAt,
+      date: formatRelativeArabic(r.publishedAt),
+      url: r.url,
+      image: r.image,
+      isBreaking: detectBreaking(r.title, r.publishedAt),
+      originalTitle: r.title,
+      originalSummary: r.summary || undefined,
+    });
+  }
+
+  items.sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
+
+  // De-duplicate by Arabic title + source (keeps the freshest)
+  const seen = new Set<string>();
+  const deduped: LiveNewsItem[] = [];
+  for (const it of items) {
+    const key = `${it.title}|${it.source}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    deduped.push(it);
+    if (deduped.length >= MAX_ITEMS) break;
+  }
+
+  return deduped;
+}
+
+// ───────────────────────────────────────────────────────────
+// NewsAPI (newsapi.org) — uses /v2/everything with financial query
+// ───────────────────────────────────────────────────────────
+async function fetchFromNewsApi(apiKey: string): Promise<RawItem[]> {
+  const fromIso = new Date(Date.now() - MAX_AGE_HOURS * 3600 * 1000)
+    .toISOString()
+    .slice(0, 19); // YYYY-MM-DDTHH:mm:ss
+  const params = new URLSearchParams({
+    q: FINANCIAL_QUERY,
+    language: "en",
+    sortBy: "publishedAt",
+    pageSize: "80",
+    from: fromIso,
+  });
+  const url = `https://newsapi.org/v2/everything?${params.toString()}`;
   const res = await fetch(url, {
     headers: { "X-Api-Key": apiKey },
     next: { revalidate: 300 },
@@ -98,24 +201,32 @@ async function fetchFromNewsApi(apiKey: string): Promise<LiveNewsItem[]> {
       urlToImage?: string;
     }>;
   };
-  return (json.articles ?? [])
-    .filter((a) => a.title && a.url)
-    .map((a, i) => buildNewsItem({
-      id: `na-${i}-${hashId(a.url ?? a.title!)}`,
-      title: a.title!,
-      summary: a.description ?? "",
-      source: a.source?.name ?? "NewsAPI",
-      publishedAt: a.publishedAt ?? new Date().toISOString(),
-      url: a.url,
-      image: a.urlToImage ?? undefined,
-    }));
+  return (json.articles ?? []).map((a, i) => ({
+    id: `na-${i}-${hashId(a.url ?? a.title ?? "")}`,
+    title: a.title ?? "",
+    summary: a.description ?? "",
+    source: a.source?.name ?? "NewsAPI",
+    publishedAt: a.publishedAt ?? new Date().toISOString(),
+    url: a.url,
+    image: a.urlToImage ?? undefined,
+  }));
 }
 
 // ───────────────────────────────────────────────────────────
 // GNews (gnews.io)
 // ───────────────────────────────────────────────────────────
-async function fetchFromGNews(apiKey: string): Promise<LiveNewsItem[]> {
-  const url = `https://gnews.io/api/v4/top-headlines?category=business&lang=en&max=20&apikey=${apiKey}`;
+async function fetchFromGNews(apiKey: string): Promise<RawItem[]> {
+  const fromIso = new Date(Date.now() - MAX_AGE_HOURS * 3600 * 1000)
+    .toISOString();
+  const params = new URLSearchParams({
+    q: FINANCIAL_QUERY,
+    lang: "en",
+    sortby: "publishdate",
+    max: "50",
+    from: fromIso,
+    apikey: apiKey,
+  });
+  const url = `https://gnews.io/api/v4/search?${params.toString()}`;
   const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error(`gnews status ${res.status}`);
   const json = (await res.json()) as {
@@ -128,24 +239,32 @@ async function fetchFromGNews(apiKey: string): Promise<LiveNewsItem[]> {
       image?: string;
     }>;
   };
-  return (json.articles ?? [])
-    .filter((a) => a.title && a.url)
-    .map((a, i) => buildNewsItem({
-      id: `gn-${i}-${hashId(a.url ?? a.title!)}`,
-      title: a.title!,
-      summary: a.description ?? "",
-      source: a.source?.name ?? "GNews",
-      publishedAt: a.publishedAt ?? new Date().toISOString(),
-      url: a.url,
-      image: a.image ?? undefined,
-    }));
+  return (json.articles ?? []).map((a, i) => ({
+    id: `gn-${i}-${hashId(a.url ?? a.title ?? "")}`,
+    title: a.title ?? "",
+    summary: a.description ?? "",
+    source: a.source?.name ?? "GNews",
+    publishedAt: a.publishedAt ?? new Date().toISOString(),
+    url: a.url,
+    image: a.image ?? undefined,
+  }));
 }
 
 // ───────────────────────────────────────────────────────────
-// MarketAux (marketaux.com)
+// MarketAux (marketaux.com) — already finance-focused
 // ───────────────────────────────────────────────────────────
-async function fetchFromMarketAux(apiKey: string): Promise<LiveNewsItem[]> {
-  const url = `https://api.marketaux.com/v1/news/all?language=en&limit=20&filter_entities=true&api_token=${apiKey}`;
+async function fetchFromMarketAux(apiKey: string): Promise<RawItem[]> {
+  const sinceIso = new Date(Date.now() - MAX_AGE_HOURS * 3600 * 1000)
+    .toISOString()
+    .slice(0, 19);
+  const params = new URLSearchParams({
+    language: "en",
+    limit: "50",
+    filter_entities: "true",
+    published_after: sinceIso,
+    api_token: apiKey,
+  });
+  const url = `https://api.marketaux.com/v1/news/all?${params.toString()}`;
   const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) throw new Error(`marketaux status ${res.status}`);
   const json = (await res.json()) as {
@@ -159,73 +278,20 @@ async function fetchFromMarketAux(apiKey: string): Promise<LiveNewsItem[]> {
       image_url?: string;
     }>;
   };
-  return (json.data ?? [])
-    .filter((a) => a.title && a.url)
-    .map((a, i) => buildNewsItem({
-      id: a.uuid ?? `ma-${i}-${hashId(a.url ?? a.title!)}`,
-      title: a.title!,
-      summary: a.description ?? "",
-      source: a.source ?? "MarketAux",
-      publishedAt: a.published_at ?? new Date().toISOString(),
-      url: a.url,
-      image: a.image_url ?? undefined,
-    }));
+  return (json.data ?? []).map((a, i) => ({
+    id: a.uuid ?? `ma-${i}-${hashId(a.url ?? a.title ?? "")}`,
+    title: a.title ?? "",
+    summary: a.description ?? "",
+    source: a.source ?? "MarketAux",
+    publishedAt: a.published_at ?? new Date().toISOString(),
+    url: a.url,
+    image: a.image_url ?? undefined,
+  }));
 }
 
 // ───────────────────────────────────────────────────────────
 // Helpers
 // ───────────────────────────────────────────────────────────
-function buildNewsItem(input: {
-  id: string;
-  title: string;
-  summary: string;
-  source: string;
-  publishedAt: string;
-  url?: string;
-  image?: string;
-}): LiveNewsItem {
-  const category = inferCategory(`${input.title} ${input.summary}`);
-  const isBreaking = isBreakingHeadline(input.title);
-  return {
-    id: input.id,
-    title: input.title,
-    summary: input.summary || input.title,
-    category,
-    source: input.source,
-    publishedAt: input.publishedAt,
-    date: formatRelativeArabic(input.publishedAt),
-    url: input.url,
-    image: input.image,
-    isBreaking,
-  };
-}
-
-// Heuristic English keyword → category mapping.
-// Coarse but good enough until we add a translation/classification layer.
-function inferCategory(text: string): LiveNewsCategory {
-  const t = text.toLowerCase();
-  if (/\b(bitcoin|btc|ether|eth|crypto|stablecoin|blockchain)\b/.test(t))
-    return "crypto";
-  if (/\b(oil|crude|brent|wti|opec|gas|energy|gold|silver|copper)\b/.test(t))
-    return "energy";
-  if (/\b(fed|fomc|powell|ecb|boe|boj|central bank|interest rate|rate hike|rate cut)\b/.test(t))
-    return "central-banks";
-  if (/\b(bank|jpmorgan|goldman|citigroup|hsbc|deutsche)\b/.test(t))
-    return "banks";
-  if (/\b(eur|usd|gbp|jpy|chf|cad|forex|currency|dollar|euro|yen)\b/.test(t))
-    return "currencies";
-  if (/\b(stock|equit|nasdaq|s&p|dow|share|earnings|ipo)\b/.test(t))
-    return "stocks";
-  if (/\b(commodit)\b/.test(t)) return "commodities";
-  if (/\b(forex|fx)\b/.test(t)) return "forex";
-  return "global";
-}
-
-function isBreakingHeadline(title: string): boolean {
-  return /\b(breaking|urgent|just in)\b/i.test(title);
-}
-
-// Format ISO date as Arabic relative time
 function formatRelativeArabic(iso: string): string {
   const date = new Date(iso);
   if (isNaN(date.getTime())) return "حديثاً";
@@ -257,3 +323,14 @@ function hashId(input: string): string {
   }
   return Math.abs(h).toString(36);
 }
+
+// Re-exported for tests / other callers if needed
+export const _internal = {
+  MAX_AGE_HOURS,
+  MAX_ITEMS,
+  NO_RECENT_MSG,
+  FINANCIAL_QUERY,
+};
+
+// Keep the type referenced so unused-import lint doesn't complain.
+export type { LiveNewsCategory };

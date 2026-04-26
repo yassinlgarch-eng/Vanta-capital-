@@ -27,6 +27,8 @@ type Props = {
 
 export default function NewsCard({ news, variant = "default", onRead }: Props) {
   const label = categoryLabels[news.category] ?? news.category;
+  const originalTitle =
+    "originalTitle" in news ? (news as LiveNewsItem).originalTitle : undefined;
 
   const handleClick = () => onRead?.(news);
   const interactive = !!onRead;
@@ -66,6 +68,14 @@ export default function NewsCard({ news, variant = "default", onRead }: Props) {
           <h3 className="font-display text-xl font-bold leading-snug text-neutral-50 transition-colors group-hover:text-gold sm:text-2xl">
             {news.title}
           </h3>
+          {originalTitle && (
+            <p
+              dir="ltr"
+              className="mt-2 line-clamp-2 text-xs leading-relaxed text-neutral-500"
+            >
+              {originalTitle}
+            </p>
+          )}
           <p className="mt-3 text-sm leading-relaxed text-neutral-400">
             {news.summary}
           </p>
@@ -125,6 +135,14 @@ export default function NewsCard({ news, variant = "default", onRead }: Props) {
       <h3 className="font-display text-base font-bold leading-snug text-neutral-50 transition-colors group-hover:text-gold">
         {news.title}
       </h3>
+      {originalTitle && (
+        <p
+          dir="ltr"
+          className="mt-1.5 line-clamp-1 text-[11px] leading-relaxed text-neutral-500"
+        >
+          {originalTitle}
+        </p>
+      )}
       <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-400">
         {news.summary}
       </p>
