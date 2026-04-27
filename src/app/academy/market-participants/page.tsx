@@ -2,6 +2,7 @@ import AcademyLessonTemplate, {
   LessonCallout,
   LessonTable,
 } from "@/components/AcademyLessonTemplate";
+import { ParticipantsMap } from "@/components/AcademyVisuals";
 
 export const metadata = {
   title: "من يحرك السوق؟ - أكاديمية Vanta Capital",
@@ -24,6 +25,22 @@ export default function LessonPage() {
         "بناء عقلية لا تفسر السوق من زاوية المتداول الفرد فقط",
       ]}
       sections={[
+        {
+          id: "market-map",
+          label: "خريطة اللاعبين",
+          title: "خريطة اللاعبين الذين يصنعون حركة السوق",
+          children: (
+            <>
+              <p>
+                السوق ليس لاعباً واحداً. الحركة التي تراها على الرسم البياني هي
+                نتيجة قرارات أطراف مختلفة: بنك مركزي يغير تكلفة المال، مؤسسة
+                تعيد توزيع محفظتها، صانع سوق يدير السيولة، متداولون أفراد
+                يتصرفون بعاطفة، وخوارزميات تنفذ بسرعة عالية.
+              </p>
+              <ParticipantsMap />
+            </>
+          ),
+        },
         {
           id: "central-banks",
           label: "البنوك المركزية",
