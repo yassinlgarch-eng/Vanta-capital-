@@ -2,6 +2,7 @@ import AcademyLessonTemplate, {
   LessonCallout,
   LessonTable,
 } from "@/components/AcademyLessonTemplate";
+import { AssetClassMatrix } from "@/components/AcademyVisuals";
 
 export const metadata = {
   title: "أنواع الأصول المالية - أكاديمية Vanta Capital",
@@ -36,6 +37,7 @@ export default function LessonPage() {
                 منطق مختلف. ما يحرك الذهب ليس بالضرورة ما يحرك سهم شركة تقنية،
                 وما يحرك النفط لا يشبه دائماً ما يحرك زوج عملات.
               </p>
+              <AssetClassMatrix />
               <LessonCallout title="قاعدة Vanta">
                 <p>
                   لا تبدأ بالسؤال: أين توجد فرصة؟ ابدأ بالسؤال: ما طبيعة هذا
