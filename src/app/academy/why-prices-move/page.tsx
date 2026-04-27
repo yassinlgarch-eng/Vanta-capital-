@@ -2,6 +2,11 @@ import AcademyLessonTemplate, {
   LessonCallout,
   LessonTable,
 } from "@/components/AcademyLessonTemplate";
+import {
+  SupplyDemandVisual,
+  PriceFormationDiagram,
+  NewsExpectationDiagram,
+} from "@/components/AcademyVisuals";
 
 export const metadata = {
   title: "لماذا تتحرك الأسعار؟ - أكاديمية Vanta Capital",
@@ -37,6 +42,7 @@ export default function LessonPage() {
                 عدد المشترين والبائعين فقط، بل حجم أوامرهم، إلحاحهم، ومكان
                 تمركزهم في دفتر الأوامر.
               </p>
+              <SupplyDemandVisual />
               <LessonTable
                 rows={[
                   {
@@ -71,6 +77,7 @@ export default function LessonPage() {
                 تحتاج أخبار قوية لتحريك السعر بعنف. أما في أصل ضعيف السيولة، فقد
                 تحركه أوامر أصغر بكثير.
               </p>
+              <PriceFormationDiagram />
               <p>
                 لهذا ترى أحياناً شموعاً طويلة وقت الأخبار أو عند افتتاح الجلسات:
                 الأوامر تتدفق بسرعة، والسيولة على بعض المستويات تختفي، فيقفز
@@ -98,6 +105,7 @@ export default function LessonPage() {
                 بالتوقعات. إذا كان الجميع يتوقعون نتيجة ممتازة، فقد يحتاج الأصل
                 إلى نتيجة استثنائية ليستمر بالصعود.
               </p>
+              <NewsExpectationDiagram />
               <LessonTable
                 rows={[
                   {
