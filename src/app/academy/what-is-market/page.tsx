@@ -2,6 +2,11 @@ import AcademyLessonTemplate, {
   LessonCallout,
   LessonTable,
 } from "@/components/AcademyLessonTemplate";
+import {
+  MarketStructureDiagram,
+  PriceFormationDiagram,
+  NewsExpectationDiagram,
+} from "@/components/AcademyVisuals";
 
 export const metadata = {
   title: "ما هو السوق المالي؟ - الدرس الأول",
@@ -103,6 +108,7 @@ export default function LessonPage() {
                 طرفين. كل خطأ في فهم واحد من هذه العناصر يؤدي غالباً إلى قرارات
                 تداول سطحية.
               </p>
+              <MarketStructureDiagram />
               <LessonTable
                 rows={[
                   {
@@ -142,6 +148,7 @@ export default function LessonPage() {
                 101. وإذا زاد المشترون بقوة وقلّ البائعون، ينتقل السعر إلى أعلى
                 مستوى يجد عنده عرضاً جديداً. هذا هو جوهر حركة السعر.
               </p>
+              <PriceFormationDiagram />
               <p>
                 لذلك لا يكفي أن تقول: الخبر إيجابي إذن السعر سيصعد. السؤال
                 الأهم: هل الخبر أقوى من توقعات السوق؟ هل السيولة كافية؟ هل
@@ -167,6 +174,7 @@ export default function LessonPage() {
                 لنفترض أن شركة أعلنت أرباحاً أعلى من التوقعات. المستثمر السطحي
                 يقول: الأرباح جيدة إذن نشتري. أما القارئ المحترف فيسأل:
               </p>
+              <NewsExpectationDiagram />
               <ul className="space-y-3">
                 <li>هل الأرباح أعلى من التوقعات فعلاً أم أعلى من العام الماضي فقط؟</li>
                 <li>هل الإيرادات نمت أم أن الربح جاء من خفض التكاليف؟</li>
