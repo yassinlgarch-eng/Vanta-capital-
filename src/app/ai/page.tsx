@@ -2,9 +2,9 @@ import PageHeader from "@/components/PageHeader";
 import UsusAIAssistant from "@/components/VantaAIAssistant";
 
 export const metadata = {
-  title: "Usus AI - مساعد تعليمي بسيط",
+  title: "Usus AI",
   description:
-    "مساعد تعليمي بسيط داخل Usus Markets يوجهك إلى دروس الفوركس، أدوات إدارة المخاطر، الأخبار، والتحليلات المناسبة.",
+    "مساعد ذكي داخل Usus Markets يوجّهك إلى الدروس، الأدوات، الأخبار، والتحليلات المناسبة داخل الموقع.",
 };
 
 export default function AIPage() {
@@ -12,8 +12,8 @@ export default function AIPage() {
     <>
       <PageHeader
         eyebrow="Usus AI"
-        title="مساعد تعليمي بسيط"
-        description="اسأل عن الفوركس، السبريد، اللوت، إدارة المخاطر، الأخبار، أو أي مفهوم أساسي، وسيقترح لك المساعد أفضل درس أو أداة داخل الموقع."
+        title="مساعد ذكي داخل الموقع"
+        description="اسأل عن الفوركس، السبريد، اللوت، إدارة المخاطر، الأخبار، أو أي مفهوم أساسي، وسيقترح لك أفضل درس أو أداة أو صفحة مناسبة داخل الموقع."
       />
 
       <section className="container-custom py-12">
