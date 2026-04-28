@@ -107,7 +107,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 sm:flex-row">
           <p className="text-xs text-neutral-500">
-            © {new Date().getFullYear()} Vanta Capital — جميع الحقوق محفوظة.
+            © {new Date().getFullYear()} Usus Markets — جميع الحقوق محفوظة.
           </p>
           <p className="text-xs text-neutral-500">
             صُمّم بعناية للقارئ العربي
