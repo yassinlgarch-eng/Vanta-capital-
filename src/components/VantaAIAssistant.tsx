@@ -31,7 +31,7 @@ function getAnswer(query: string) {
 
   if (!q) {
     return {
-      text: "اكتب سؤالك وسأقترح لك أفضل درس أو أداة داخل Vanta Capital.",
+      text: "اكتب سؤالك وسأقترح لك أفضل درس أو أداة داخل Usus Markets.",
       links: [],
     };
   }
@@ -136,13 +136,13 @@ function getAnswer(query: string) {
   };
 }
 
-export default function VantaAIAssistant() {
+export default function UsusAIAssistant() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       text:
-        "أهلاً، أنا Vanta AI — مساعد تعليمي بسيط. اسألني عن الفوركس، السبريد، المخاطرة، الأخبار، أو أي درس داخل الموقع.",
+        "أهلاً، أنا Usus AI — مساعد تعليمي بسيط. اسألني عن الفوركس، السبريد، المخاطرة، الأخبار، أو أي درس داخل الموقع.",
     },
   ]);
 
@@ -165,7 +165,7 @@ export default function VantaAIAssistant() {
     <div className="overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-ink-950 via-navy/45 to-ink-950 shadow-card">
       <div className="grid gap-0 lg:grid-cols-12">
         <aside className="border-b border-white/5 p-6 lg:col-span-4 lg:border-b-0 lg:border-l">
-          <span className="chip chip-gold">Vanta AI</span>
+          <span className="chip chip-gold">Usus AI</span>
           <h2 className="mt-5 font-display text-3xl font-bold text-neutral-50">
             مساعد ذكي بسيط للموقع
           </h2>
