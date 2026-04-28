@@ -1,8 +1,8 @@
 {
-  "name": "vanta-capital",
+  "name": "usus-markets",
   "version": "0.1.0",
   "private": true,
-  "description": "Vanta Capital - منصة عربية احترافية للأسواق المالية والتداول",
+  "description": "Usus Markets - منصة عربية احترافية لفهم الأسواق المالية والتداول",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
