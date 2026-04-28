@@ -5,6 +5,7 @@ import AcademyLessonTemplate, {
 import {
   BidAskSpreadVisual,
   ForexGlossaryVisual,
+  PriceFormationDiagram,
 } from "@/components/AcademyVisuals";
 
 export const metadata = {
@@ -53,6 +54,21 @@ export default function BidAskSpreadLessonPage() {
                   <strong> Spread</strong> فهو الفرق بينهما.
                 </p>
               </LessonCallout>
+            </>
+          ),
+        },
+        {
+          id: "market-mechanism",
+          label: "الآلية البصرية",
+          title: "كيف يولد السوق سعرين؟",
+          children: (
+            <>
+              <p>
+                وجود سعرين ليس عيباً في المنصة. هو انعكاس طبيعي لوجود طرف يطلب
+                الشراء وطرف يعرض البيع. كلما تقاربت أوامر الطرفين كان السبريد
+                أضيق، وكلما ضعفت السيولة أو زاد التوتر اتسع الفرق بين السعرين.
+              </p>
+              <PriceFormationDiagram />
             </>
           ),
         },
