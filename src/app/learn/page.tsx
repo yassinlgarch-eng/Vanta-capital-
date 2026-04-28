@@ -2,9 +2,9 @@ import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 
 export const metadata = {
-  title: "مركز التعلم - Vanta Capital",
+  title: "مركز التعلم - Usus Markets",
   description:
-    "مركز تعلم مختصر ومنظم يجمع أهم المسارات، الدروس، الأدوات، التحليلات، وركن VIP داخل Vanta Capital.",
+    "مركز تعلم منظم يجمع أهم المسارات، الدروس، الأدوات، التحليلات، وركن VIP داخل Usus Markets.",
 };
 
 const tabs = [
@@ -88,7 +88,7 @@ function MiniVisual({ title, shield = false }: { title: string; shield?: boolean
       <div className="absolute -right-12 top-4 h-32 w-32 rounded-full bg-gold/15 blur-[55px]" />
       <div className="relative flex min-h-[122px] flex-col justify-between">
         <div className="flex items-center justify-between">
-          <span className="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-[10px] font-bold text-gold">VANTA</span>
+          <span className="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-[10px] font-bold text-gold">USUS</span>
           <span className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-gold">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-5 w-5">
               <path d={shield ? "M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6l7-3z" : "M4 18h16M7 15v-5M12 15V6M17 15v-8"} strokeLinecap="round" strokeLinejoin="round" />
@@ -122,8 +122,8 @@ export default function LearnPage() {
     <>
       <PageHeader
         eyebrow="مركز التعلم"
-        title="تجربة تعليمية منظمة بدون ازدحام"
-        description="استلهمنا فكرة الأكاديميات الكبيرة، لكن أبقيناها خفيفة: مسارات واضحة، دليل سريع، أدوات، وتحليلات مختارة فقط."
+        title="تجربة تعليمية منظمة"
+        description="مسارات واضحة، دليل سريع، أدوات عملية، وتحليلات مختارة في واجهة واحدة منظمة."
       />
 
       <section className="container-custom py-12">
@@ -153,7 +153,7 @@ export default function LearnPage() {
                 ابدأ بفهم السوق قبل البحث عن الفرصة
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-400 sm:text-base">
-                هذا المركز ليس أرشيفاً ضخماً؛ هو بوابة مختصرة توصلك لأهم المسارات والأدوات بالترتيب الصحيح.
+                بوابة منظمة توصلك إلى أهم المسارات والأدوات بالترتيب الصحيح.
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/academy/market-basics" className="btn-gold">ابدأ المسار</Link>
@@ -183,7 +183,7 @@ export default function LearnPage() {
         </div>
 
         <div id="tracks" className="mt-16">
-          <SectionTitle title="ماستر كلاس Vanta" eyebrow="المسارات الأساسية" />
+          <SectionTitle title="المسارات الأساسية" eyebrow="Master Class" />
           <div className="grid gap-5 lg:grid-cols-2">
             {masterClass.map((item, index) => (
               <Link key={item.href} href={item.href} className="group block">
