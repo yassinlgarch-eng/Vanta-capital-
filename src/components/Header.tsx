@@ -39,6 +39,22 @@ export default function Header() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <Link
+            href="/search"
+            aria-label="بحث داخل الموقع"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-neutral-300 transition-all hover:border-gold/30 hover:text-gold"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="h-4.5 w-4.5"
+            >
+              <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+              <circle cx="11" cy="11" r="7" />
+            </svg>
+          </Link>
+          <Link
             href="/vip"
             className="inline-flex items-center gap-1.5 rounded-lg border border-gold/30 bg-gold/10 px-4 py-2 text-sm font-semibold text-gold transition-all hover:border-gold/60 hover:bg-gold/15"
           >
@@ -49,28 +65,47 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile burger */}
-        <button
-          type="button"
-          aria-label="فتح القائمة"
-          aria-expanded={open}
-          className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 lg:hidden"
-          onClick={() => setOpen(!open)}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            className="h-5 w-5 text-neutral-50"
+        <div className="flex items-center gap-2 lg:hidden">
+          <Link
+            href="/search"
+            aria-label="بحث داخل الموقع"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-neutral-50"
           >
-            {open ? (
-              <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
-            ) : (
-              <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
-            )}
-          </svg>
-        </button>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="h-5 w-5"
+            >
+              <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
+              <circle cx="11" cy="11" r="7" />
+            </svg>
+          </Link>
+
+          {/* Mobile burger */}
+          <button
+            type="button"
+            aria-label="فتح القائمة"
+            aria-expanded={open}
+            className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5"
+            onClick={() => setOpen(!open)}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="h-5 w-5 text-neutral-50"
+            >
+              {open ? (
+                <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+              ) : (
+                <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -87,6 +122,13 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/search"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 transition-colors hover:bg-white/5 hover:text-neutral-50"
+            >
+              البحث
+            </Link>
             <Link
               href="/vip"
               onClick={() => setOpen(false)}
