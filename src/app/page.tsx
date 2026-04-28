@@ -11,11 +11,7 @@ import { books } from "@/data/library";
 export default function HomePage() {
   return (
     <>
-      {/* ═══════════════════════════════════════
-          HERO SECTION
-          ═══════════════════════════════════════ */}
       <section className="relative overflow-hidden">
-        {/* خلفيات تأثيرية */}
         <div className="absolute inset-0 grid-bg opacity-50" aria-hidden="true" />
         <div
           className="absolute -top-24 right-1/3 h-96 w-96 rounded-full bg-gold/10 blur-[120px]"
@@ -28,7 +24,6 @@ export default function HomePage() {
 
         <div className="container-custom relative pt-16 pb-12 sm:pt-24 sm:pb-20">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-            {/* يسار - النص */}
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-gold" />
@@ -79,7 +74,6 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* مؤشرات الموثوقية */}
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-white/5 pt-8">
                 <div>
                   <div className="font-display text-2xl font-bold text-gold sm:text-3xl">
@@ -108,21 +102,26 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* يمين - بطاقات أسعار حية */}
             <div className="relative lg:col-span-5">
-              <LiveMarketTicker
-                variant="compact"
-                limit={6}
-                refreshMs={45_000}
-              />
+              <div className="overflow-hidden rounded-3xl border border-gold/20 bg-ink-900/60 p-2 shadow-card">
+                <img
+                  src="/images/visuals/home-market-dashboard.svg"
+                  alt="لوحة أسواق مالية احترافية"
+                  className="h-auto w-full rounded-2xl"
+                />
+              </div>
+              <div className="mt-5">
+                <LiveMarketTicker
+                  variant="compact"
+                  limit={6}
+                  refreshMs={45_000}
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          أخبار عاجلة
-          ═══════════════════════════════════════ */}
       <section className="container-custom py-20">
         <div className="flex items-end justify-between gap-6">
           <div>
@@ -158,9 +157,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          لماذا Vanta Capital
-          ═══════════════════════════════════════ */}
       <section className="relative overflow-hidden py-20">
         <div className="absolute inset-0 grid-bg opacity-40" aria-hidden="true" />
         <div className="container-custom relative">
@@ -190,9 +186,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          الأكاديمية
-          ═══════════════════════════════════════ */}
       <section className="container-custom py-20">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-5">
@@ -221,9 +214,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          ركن VIP
-          ═══════════════════════════════════════ */}
       <section className="relative overflow-hidden py-20">
         <div className="container-custom relative">
           <div className="gradient-border relative overflow-hidden p-8 sm:p-12 lg:p-16">
@@ -301,9 +291,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          الكتب الرقمية
-          ═══════════════════════════════════════ */}
       <section className="container-custom py-20">
         <div className="flex items-end justify-between gap-6">
           <div>
@@ -333,9 +320,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════════════════════════
-          CTA النهائي
-          ═══════════════════════════════════════ */}
       <section className="container-custom py-20">
         <div className="relative overflow-hidden rounded-3xl border border-gold/20 bg-gradient-to-br from-ink-900 via-navy/50 to-ink-900 p-10 text-center sm:p-16">
           <div
