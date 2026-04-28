@@ -289,3 +289,127 @@ export function RiskRewardVisual() {
     </VisualShell>
   );
 }
+
+export function ForexPairVisual() {
+  return (
+    <VisualShell
+      title="زوج العملات: شراء عملة وبيع أخرى"
+      subtitle="في الفوركس لا تتداول عملة منفردة؛ أنت تقارن قوة عملة أمام عملة أخرى."
+    >
+      <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-center">
+        <Node title="EUR" text="العملة الأساسية: ما تشتريه أو تبيعه أولاً" tone="gold" />
+        <div className="grid place-items-center rounded-xl border border-white/10 bg-white/5 p-4 text-center">
+          <div className="font-mono text-3xl font-bold text-neutral-50">EUR/USD</div>
+          <div className="mt-2 text-xs text-neutral-400">إذا ارتفع الزوج، اليورو يقوى أمام الدولار</div>
+        </div>
+        <Node title="USD" text="عملة التسعير: العملة التي تقيس بها قيمة اليورو" tone="blue" />
+      </div>
+    </VisualShell>
+  );
+}
+
+export function BidAskSpreadVisual() {
+  return (
+    <VisualShell
+      title="Bid / Ask / Spread"
+      subtitle="السبريد هو الفرق بين سعر البيع المتاح وسعر الشراء المتاح؛ وهو أول تكلفة تراها في الصفقة."
+    >
+      <div className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-xl border border-bear/30 bg-bear/10 p-5 text-center">
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-red-200">Bid</div>
+          <div className="mt-2 font-mono text-3xl font-bold text-neutral-50">1.0848</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-400">السعر الذي يمكنك البيع عليه غالباً.</p>
+        </div>
+        <div className="rounded-xl border border-gold/35 bg-gold/10 p-5 text-center">
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">Spread</div>
+          <div className="mt-2 font-mono text-3xl font-bold text-gold">0.0002</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-400">فرق السعر بين Bid و Ask.</p>
+        </div>
+        <div className="rounded-xl border border-bull/30 bg-bull/10 p-5 text-center">
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-green-200">Ask</div>
+          <div className="mt-2 font-mono text-3xl font-bold text-neutral-50">1.0850</div>
+          <p className="mt-2 text-xs leading-relaxed text-neutral-400">السعر الذي يمكنك الشراء عليه غالباً.</p>
+        </div>
+      </div>
+    </VisualShell>
+  );
+}
+
+export function PipLotVisual() {
+  return (
+    <VisualShell
+      title="Pip و Lot: قياس الحركة وحجم الصفقة"
+      subtitle="النقطة تقيس مقدار الحركة، واللوت يحدد قيمة كل حركة على حسابك."
+    >
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-xl border border-gold/25 bg-gold/5 p-5">
+          <h4 className="font-display text-lg font-bold text-gold">Pip</h4>
+          <div className="mt-4 rounded-lg bg-ink-950/60 p-4 font-mono text-xl text-neutral-50">
+            EUR/USD: 1.0850 → 1.0860
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-neutral-300">
+            الحركة هنا تساوي 10 نقاط تقريباً في أغلب أزواج العملات ذات أربع خانات عشرية.
+          </p>
+        </div>
+        <div className="rounded-xl border border-electric/25 bg-electric/5 p-5">
+          <h4 className="font-display text-lg font-bold text-blue-200">Lot</h4>
+          <div className="mt-4 grid gap-2 text-sm">
+            <div className="rounded-lg bg-white/5 p-3">Micro Lot = 0.01</div>
+            <div className="rounded-lg bg-white/5 p-3">Mini Lot = 0.10</div>
+            <div className="rounded-lg bg-white/5 p-3">Standard Lot = 1.00</div>
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-neutral-300">
+            كلما كبر حجم اللوت، زادت قيمة الربح والخسارة لكل نقطة.
+          </p>
+        </div>
+      </div>
+    </VisualShell>
+  );
+}
+
+export function LeverageMarginVisual() {
+  return (
+    <VisualShell
+      title="الرافعة والهامش: قوة مضاعفة وخطر مضاعف"
+      subtitle="الرافعة تسمح لك بفتح صفقة أكبر من رصيدك، لكن الخسارة تتحرك على حجم الصفقة الكامل."
+    >
+      <div className="grid gap-4 md:grid-cols-3">
+        <Node title="رصيد الحساب" text="رأس المال الحقيقي المتاح لديك" tone="gold" />
+        <Node title="الهامش" text="جزء محجوز من الرصيد لفتح الصفقة" tone="blue" />
+        <Node title="حجم الصفقة" text="القيمة الكاملة التي تتحرك عليها الأرباح والخسائر" tone="red" />
+      </div>
+      <div className="mt-5 rounded-xl border border-bear/20 bg-bear/5 p-4 text-sm leading-relaxed text-neutral-300">
+        مثال تعليمي: رافعة 1:100 لا تعني ربحاً مضموناً؛ تعني أن حركة صغيرة عكسك يمكن أن تؤثر بقوة على الحساب إذا كان حجم الصفقة كبيراً.
+      </div>
+    </VisualShell>
+  );
+}
+
+export function ForexGlossaryVisual() {
+  const terms = [
+    ["Base Currency", "العملة الأولى في الزوج، مثل EUR في EUR/USD."],
+    ["Quote Currency", "العملة الثانية التي نقيس بها قيمة العملة الأولى."],
+    ["Pip", "وحدة قياس صغيرة لحركة السعر في أغلب أزواج الفوركس."],
+    ["Lot", "حجم الصفقة؛ وهو الذي يحدد قيمة النقطة مالياً."],
+    ["Spread", "الفرق بين سعر الشراء وسعر البيع."],
+    ["Leverage", "رافعة تسمح بصفقة أكبر من رأس المال، لكنها تضخم الخطر."],
+    ["Margin", "المبلغ المحجوز مؤقتاً لفتح الصفقة."],
+    ["Stop Loss", "أمر يخرجك من الصفقة عند فشل السيناريو لتحديد الخسارة."],
+  ];
+
+  return (
+    <VisualShell
+      title="قاموس الفوركس السريع"
+      subtitle="المصطلحات المعقدة تصبح سهلة عندما تربطها بدورها العملي داخل الصفقة."
+    >
+      <div className="grid gap-3 md:grid-cols-2">
+        {terms.map(([term, meaning]) => (
+          <div key={term} className="rounded-xl border border-white/5 bg-white/[0.03] p-4">
+            <div className="font-mono text-sm font-bold text-gold">{term}</div>
+            <p className="mt-2 text-sm leading-relaxed text-neutral-300">{meaning}</p>
+          </div>
+        ))}
+      </div>
+    </VisualShell>
+  );
+}
