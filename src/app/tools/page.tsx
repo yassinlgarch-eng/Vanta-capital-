@@ -1,5 +1,6 @@
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
+import { RiskRewardVisual, PipLotVisual } from "@/components/AcademyVisuals";
 
 export const metadata = {
   title: "أدوات التداول - Vanta Capital",
@@ -27,6 +28,11 @@ export default function ToolsPage() {
       />
 
       <section className="container-custom py-12">
+        <div className="mb-10 grid gap-5 lg:grid-cols-2">
+          <RiskRewardVisual />
+          <PipLotVisual />
+        </div>
+
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {tools.map((tool) => (
             <Link key={tool.href} href={tool.href} className="card card-hover group block p-6">
