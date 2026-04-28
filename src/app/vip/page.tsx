@@ -18,6 +18,25 @@ export default function VIPPage() {
       />
 
       <section className="container-custom py-12">
+        <div className="mb-10 rounded-3xl border border-gold/25 bg-gradient-to-br from-gold/10 via-ink-900 to-navy/40 p-6 sm:p-8">
+          <div className="grid gap-6 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-8">
+              <span className="chip chip-gold">VIP Market Room</span>
+              <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-neutral-50 sm:text-4xl">
+                جرّب غرفة السوق الخاصة بالأعضاء
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-300 sm:text-base">
+                لوحة تعليمية تجمع الأسعار، السيناريوهات، مفكرة الأخبار، الأدوات، ومكتبة VIP في مكان واحد.
+              </p>
+            </div>
+            <div className="lg:col-span-4 lg:text-left">
+              <Link href="/vip/dashboard" className="btn-gold w-full justify-center sm:w-auto">
+                دخول غرفة السوق VIP
+              </Link>
+            </div>
+          </div>
+        </div>
+
         {/* المزايا */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {[
@@ -147,7 +166,6 @@ export default function VIPPage() {
                     ))}
                   </ul>
 
-                  {/* TODO: ربط بوابة دفع لاحقاً */}
                   <button
                     type="button"
                     className={`mt-7 w-full rounded-lg py-3 text-sm font-semibold transition-all ${
