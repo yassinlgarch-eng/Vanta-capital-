@@ -10,7 +10,7 @@ const levelColors: Record<string, string> = {
 export default function LessonCard({ section }: { section: AcademySection }) {
   return (
     <Link
-      href={`/academy`}
+      href={`/academy/${section.slug}`}
       className="card card-hover group block p-6"
     >
       <div className="flex items-start justify-between gap-3">
