@@ -39,6 +39,12 @@ export default function Header() {
 
         <div className="hidden items-center gap-2 lg:flex">
           <Link
+            href="/ai"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-electric/30 bg-electric/10 px-3 py-2 text-sm font-semibold text-blue-200 transition-all hover:border-electric/60 hover:bg-electric/15"
+          >
+            AI
+          </Link>
+          <Link
             href="/search"
             aria-label="بحث داخل الموقع"
             className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-neutral-300 transition-all hover:border-gold/30 hover:text-gold"
@@ -66,6 +72,13 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
+          <Link
+            href="/ai"
+            aria-label="Vanta AI"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-electric/20 bg-electric/10 text-blue-200"
+          >
+            AI
+          </Link>
           <Link
             href="/search"
             aria-label="بحث داخل الموقع"
@@ -122,6 +135,13 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/ai"
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-blue-200 transition-colors hover:bg-electric/10"
+            >
+              Vanta AI
+            </Link>
             <Link
               href="/search"
               onClick={() => setOpen(false)}
