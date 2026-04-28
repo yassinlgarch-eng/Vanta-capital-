@@ -140,6 +140,13 @@ const corePages: SearchItem[] = [
     keywords: ["academy", "أكاديمية", "تعليم", "دروس", "تداول"],
   },
   {
+    title: "مركز التعلم",
+    description: "بوابة خفيفة ومنظمة لأهم المسارات والأدوات والتحليلات داخل الموقع.",
+    href: "/learn",
+    category: "التعلّم",
+    keywords: ["learn", "مركز التعلم", "ابدأ من هنا", "مسارات", "أدوات"],
+  },
+  {
     title: "أدوات التداول",
     description: "أدوات عملية تساعدك على حساب المخاطرة وحجم الصفقة قبل التنفيذ.",
     href: "/tools",
@@ -175,8 +182,15 @@ const corePages: SearchItem[] = [
     keywords: ["vip", "توصيات", "تحليلات", "اشتراك", "تنبيهات"],
   },
   {
+    title: "غرفة السوق VIP",
+    description: "لوحة متابعة تعليمية تجمع الأسعار والسيناريوهات والأخبار والأدوات.",
+    href: "/vip/dashboard",
+    category: "VIP",
+    keywords: ["vip dashboard", "غرفة السوق", "market room", "سيناريوهات", "watchlist"],
+  },
+  {
     title: "تواصل معنا",
-    description: "أرسل سؤالك أو طلب الاشتراك أو اقتراحك لفريق Vanta Capital.",
+    description: "أرسل سؤالك أو طلب الاشتراك أو اقتراحك لفريق Usus Markets.",
     href: "/contact",
     category: "الدعم",
     keywords: ["contact", "تواصل", "دعم", "اشتراك", "رسالة"],
