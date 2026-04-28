@@ -28,8 +28,8 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Vanta Capital — منصتك العربية لفهم الأسواق المالية",
-    template: "%s | Vanta Capital",
+    default: "Usus Markets — منصتك العربية لفهم الأسواق المالية",
+    template: "%s | Usus Markets",
   },
   description:
     "منصة عربية احترافية تجمع الأخبار الاقتصادية، تعليم التداول، تحليلات الفوركس والأسهم والسلع، ومحتوى أكاديمي مبسّط في مكان واحد.",
@@ -42,11 +42,12 @@ export const metadata: Metadata = {
     "أخبار اقتصادية",
     "تحليل فني",
     "إدارة المخاطر",
-    "Vanta Capital",
+    "Usus Markets",
+    "أُسُس التداول",
   ],
-  authors: [{ name: "Vanta Capital" }],
+  authors: [{ name: "Usus Markets" }],
   openGraph: {
-    title: "Vanta Capital — منصتك العربية للأسواق المالية",
+    title: "Usus Markets — أُسُس التداول والأسواق المالية",
     description:
       "أخبار اقتصادية، تعليم تداول، وتحليلات منظّمة بالعربية — في مكان واحد.",
     locale: "ar_SA",
