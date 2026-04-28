@@ -28,7 +28,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5">
                 <span className="h-2 w-2 animate-pulse rounded-full bg-gold" />
                 <span className="text-xs font-medium tracking-wide text-gold">
-                  منصة عربية للأسواق المالية
+                  Usus Markets · أُسُس التداول
                 </span>
               </div>
 
@@ -161,7 +161,7 @@ export default function HomePage() {
         <div className="absolute inset-0 grid-bg opacity-40" aria-hidden="true" />
         <div className="container-custom relative">
           <div className="text-center">
-            <p className="section-eyebrow justify-center">لماذا Vanta Capital</p>
+            <p className="section-eyebrow justify-center">لماذا Usus Markets</p>
             <h2 className="section-title mx-auto">
               منصة مبنية على الوضوح والاحتراف
             </h2>
