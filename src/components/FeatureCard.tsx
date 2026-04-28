@@ -1,7 +1,11 @@
+import Link from "next/link";
+
 type Props = {
   title: string;
   description: string;
   icon: string;
+  href?: string;
+  cta?: string;
   index?: number;
 };
 
@@ -79,9 +83,20 @@ const icons: Record<string, JSX.Element> = {
   crown: <CrownIcon />,
 };
 
-export default function FeatureCard({ title, description, icon, index = 0 }: Props) {
+export default function FeatureCard({
+  title,
+  description,
+  icon,
+  href = "/academy",
+  cta = "افتح القسم",
+  index = 0,
+}: Props) {
   return (
-    <div className="card card-hover group relative h-full overflow-hidden p-6 sm:p-7">
+    <Link
+      href={href}
+      aria-label={`${cta}: ${title}`}
+      className="card card-hover group relative block h-full overflow-hidden p-6 outline-none transition-all focus-visible:ring-2 focus-visible:ring-gold/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950 sm:p-7"
+    >
       <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gold/5 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
 
       <div className="relative flex h-full flex-col">
@@ -107,14 +122,28 @@ export default function FeatureCard({ title, description, icon, index = 0 }: Pro
         </div>
 
         <div className="mt-auto">
-          <h3 className="font-display text-2xl font-bold leading-tight text-neutral-50 sm:text-3xl lg:text-lg xl:text-xl">
+          <h3 className="font-display text-2xl font-bold leading-tight text-neutral-50 transition-colors group-hover:text-gold sm:text-3xl lg:text-lg xl:text-xl">
             {title}
           </h3>
           <p className="mt-4 text-base leading-loose text-neutral-400 sm:text-lg lg:text-sm xl:text-base">
             {description}
           </p>
+
+          <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-gold opacity-90 transition-all group-hover:gap-3 group-hover:text-gold-light">
+            {cta}
+            <svg
+              className="h-4 w-4 flip-rtl"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" />
+            </svg>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
