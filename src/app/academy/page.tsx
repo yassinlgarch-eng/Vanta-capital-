@@ -2,6 +2,7 @@ import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
 import LessonCard from "@/components/LessonCard";
 import { academySections } from "@/data/academy";
+import { MarketStructureDiagram, ParticipantsMap } from "@/components/AcademyVisuals";
 
 export const metadata = {
   title: "الأكاديمية - تعلّم الأسواق المالية",
@@ -102,6 +103,11 @@ export default function AcademyPage() {
       />
 
       <section className="container-custom py-12">
+        <div className="mb-10 grid gap-5 lg:grid-cols-2">
+          <MarketStructureDiagram />
+          <ParticipantsMap />
+        </div>
+
         {/* المسار التأسيسي */}
         <div className="rounded-3xl border border-gold/20 bg-gradient-to-br from-ink-900 via-navy/40 to-ink-900 p-6 sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
