@@ -11,6 +11,7 @@ const navItems = [
   { href: "/commodities", label: "السلع" },
   { href: "/analysis", label: "التحليلات" },
   { href: "/academy", label: "الأكاديمية" },
+  { href: "/tools", label: "الأدوات" },
   { href: "/library", label: "المكتبة" },
   { href: "/community", label: "المجتمع" },
 ];
