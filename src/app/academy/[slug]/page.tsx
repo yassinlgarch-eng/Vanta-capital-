@@ -128,6 +128,61 @@ const sectionLessons: Record<
   ],
 };
 
+const sectionFocus: Record<string, string> = {
+  "market-basics":
+    "هذا القسم يبني الأساس النظري: ما هو السوق، لماذا توجد الأسعار، ومن هم اللاعبون. لا يدخل في توصيات أو مؤشرات قبل فهم البنية.",
+  "stocks-investing":
+    "هذا القسم يركز على الاستثمار في الشركات: الملكية، الأرباح، القوائم المالية، التقييم، والفرق بين المستثمر والمضارب.",
+  "commodities-energy":
+    "هذا القسم يشرح السلع من زاوية الاقتصاد الحقيقي: الذهب، النفط، الفضة، الغاز، العرض والطلب، والمخاطر الجيوسياسية.",
+  "technical-analysis":
+    "هذا القسم مخصص لقراءة الرسم البياني: الاتجاه، الدعم والمقاومة، النماذج، والمؤشرات دون مبالغة أو وعود.",
+  "fundamental-analysis":
+    "هذا القسم يشرح الأخبار والاقتصاد الكلي: الفائدة، التضخم، الوظائف، البنوك المركزية، وكيف تتحول التوقعات إلى حركة سعر.",
+  "risk-management":
+    "هذا القسم يحمي رأس المال: حجم الصفقة، وقف الخسارة، نسبة المخاطرة، وتجنب الانهيار بعد سلسلة خسائر.",
+  "trading-psychology":
+    "هذا القسم يركز على عقلية المتداول: الخوف، الطمع، الانتقام، الانضباط، وبناء دفتر صفقات يساعد على التطور.",
+};
+
+const sectionOutputs: Record<string, string[]> = {
+  "market-basics": [
+    "خريطة ذهنية للسوق المالي",
+    "قاموس مفاهيم أساسية",
+    "أمثلة واقعية من الأسواق",
+  ],
+  "stocks-investing": [
+    "قوالب قراءة سهم",
+    "شرح مؤشرات تقييم أساسية",
+    "أمثلة على شركات ومؤشرات",
+  ],
+  "commodities-energy": [
+    "خرائط محركات الذهب والنفط",
+    "شرح علاقة الدولار والفائدة بالسلع",
+    "أمثلة جيوسياسية واقتصادية",
+  ],
+  "technical-analysis": [
+    "رسومات دعم ومقاومة",
+    "أمثلة شموع واتجاهات",
+    "تمارين قراءة الرسم البياني",
+  ],
+  "fundamental-analysis": [
+    "دليل قراءة التقويم الاقتصادي",
+    "نماذج تفسير الخبر مقابل التوقع",
+    "خرائط تأثير الفائدة والتضخم",
+  ],
+  "risk-management": [
+    "حاسبة حجم الصفقة ذهنياً",
+    "قواعد وقف الخسارة",
+    "خطة حماية رأس المال",
+  ],
+  "trading-psychology": [
+    "قواعد الانضباط",
+    "دفتر صفقات مبسط",
+    "تمارين مراجعة السلوك بعد الصفقة",
+  ],
+};
+
 export function generateStaticParams() {
   return academySections.map((section) => ({ slug: section.slug }));
 }
@@ -153,10 +208,33 @@ export default function AcademySectionPage({ params }: { params: { slug: string 
   if (!section) notFound();
 
   const lessons = sectionLessons[section.slug] ?? [];
+  const focus = sectionFocus[section.slug];
+  const outputs = sectionOutputs[section.slug] ?? [];
   const isForex = section.slug === "forex-basics";
 
   if (isForex) {
-    return null;
+    return (
+      <>
+        <PageHeader
+          eyebrow="الأكاديمية · مبتدئ"
+          title="الفوركس للمبتدئين"
+          description="مسار الفوركس التفصيلي متاح الآن بصفحة مخصصة تحتوي على الدروس والرسومات والمصطلحات."
+        />
+        <section className="container-custom py-12">
+          <div className="rounded-3xl border border-gold/20 bg-gold/5 p-8 text-center">
+            <h2 className="font-display text-2xl font-bold text-neutral-50">
+              تم نقل هذا القسم إلى صفحة تعليمية كاملة
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-neutral-400">
+              لتجنب التكرار، صفحة الفوركس التفصيلية موجودة في مسار مستقل يحتوي على كل الدروس المضافة حتى الآن.
+            </p>
+            <Link href="/academy/forex-basics" className="btn-gold mt-6">
+              فتح مسار الفوركس
+            </Link>
+          </div>
+        </section>
+      </>
+    );
   }
 
   return (
@@ -171,12 +249,12 @@ export default function AcademySectionPage({ params }: { params: { slug: string 
         <div className="rounded-3xl border border-gold/20 bg-gradient-to-br from-ink-900 via-navy/40 to-ink-900 p-6 sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-8">
-              <span className="chip chip-gold">قيد التطوير التحريري</span>
+              <span className="chip chip-gold">خطة محتوى منظمة</span>
               <h2 className="mt-4 font-display text-3xl font-bold leading-tight text-neutral-50 sm:text-4xl">
-                هذا القسم جاهز كبنية، والمحتوى التفصيلي قادم تدريجياً
+                دور هذا القسم داخل الأكاديمية
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-400 sm:text-base">
-                بدأنا حالياً ببناء مسار الفوركس بعمق، وسيتم تطبيق نفس النظام التحريري والبصري على هذا القسم: دروس واضحة، أمثلة عملية، مصطلحات مبسطة، ورسومات تعليمية مخصصة.
+                {focus}
               </p>
             </div>
             <div className="lg:col-span-4">
@@ -202,7 +280,7 @@ export default function AcademySectionPage({ params }: { params: { slug: string 
           <div className="mt-14">
             <h2 className="section-title text-3xl">خطة الدروس المقترحة</h2>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-400">
-              هذه عناوين أولية ستتحول لاحقاً إلى صفحات كاملة بنفس جودة دروس الفوركس.
+              هذه ليست عناوين عشوائية؛ هي خريطة تحريرية لكل قسم، وسيتم تحويلها لاحقاً إلى صفحات كاملة بنفس جودة مسار الفوركس.
             </p>
 
             <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -221,6 +299,22 @@ export default function AcademySectionPage({ params }: { params: { slug: string 
                     {lesson.description}
                   </p>
                 </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {outputs.length > 0 && (
+          <div className="mt-14 rounded-2xl border border-white/5 bg-ink-900/50 p-6 sm:p-8">
+            <h2 className="font-display text-2xl font-bold text-neutral-50">
+              ما الذي سيحتويه هذا القسم؟
+            </h2>
+            <div className="mt-6 grid gap-3 sm:grid-cols-3">
+              {outputs.map((item) => (
+                <div key={item} className="rounded-xl border border-white/5 bg-white/[0.03] p-4">
+                  <span className="text-sm font-semibold text-gold">✓</span>
+                  <p className="mt-2 text-sm leading-relaxed text-neutral-300">{item}</p>
+                </div>
               ))}
             </div>
           </div>
