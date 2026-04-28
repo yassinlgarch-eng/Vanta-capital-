@@ -4,6 +4,7 @@ import LiveNewsList from "@/components/LiveNewsList";
 import FeatureCard from "@/components/FeatureCard";
 import LessonCard from "@/components/LessonCard";
 import BookCard from "@/components/BookCard";
+import { MarketStructureDiagram, NewsExpectationDiagram } from "@/components/AcademyVisuals";
 import { academySections, homeFeatures } from "@/data/academy";
 import { books } from "@/data/library";
 
@@ -179,6 +180,13 @@ export default function HomePage() {
               <FeatureCard key={feature.title} {...feature} index={i} />
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="container-custom py-12">
+        <div className="grid gap-5 lg:grid-cols-2">
+          <MarketStructureDiagram />
+          <NewsExpectationDiagram />
         </div>
       </section>
 
