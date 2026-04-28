@@ -24,7 +24,6 @@ export default function Header() {
       <div className="container-custom flex h-16 items-center justify-between gap-4">
         <Logo />
 
-        {/* Desktop Nav */}
         <nav className="hidden items-center gap-1 lg:flex">
           {navItems.map((item) => (
             <Link
@@ -74,7 +73,7 @@ export default function Header() {
         <div className="flex items-center gap-2 lg:hidden">
           <Link
             href="/ai"
-            aria-label="Vanta AI"
+            aria-label="Usus AI"
             className="grid h-10 w-10 place-items-center rounded-lg border border-electric/20 bg-electric/10 text-blue-200"
           >
             AI
@@ -96,7 +95,6 @@ export default function Header() {
             </svg>
           </Link>
 
-          {/* Mobile burger */}
           <button
             type="button"
             aria-label="فتح القائمة"
@@ -121,7 +119,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {open && (
         <div className="border-t border-white/5 bg-ink-950 lg:hidden">
           <nav className="container-custom flex flex-col gap-1 py-4">
@@ -140,7 +137,7 @@ export default function Header() {
               onClick={() => setOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-blue-200 transition-colors hover:bg-electric/10"
             >
-              Vanta AI
+              Usus AI
             </Link>
             <Link
               href="/search"
