@@ -1,5 +1,5 @@
 import PageHeader from "@/components/PageHeader";
-import UsusAIAssistant from "@/components/VantaAIAssistant";
+import UsusAIAssistant from "@/components/UsusAIAssistant";
 
 export const metadata = {
   title: "Usus AI",
