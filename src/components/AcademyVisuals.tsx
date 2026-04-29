@@ -44,12 +44,12 @@ function Node({
     tone === "gold"
       ? "border-gold/35 bg-gold/10 text-gold"
       : tone === "blue"
-      ? "border-electric/35 bg-electric/10 text-blue-200"
-      : tone === "red"
-      ? "border-bear/35 bg-bear/10 text-red-200"
-      : tone === "green"
-      ? "border-bull/35 bg-bull/10 text-green-200"
-      : "border-white/10 bg-white/5 text-neutral-200";
+        ? "border-electric/35 bg-electric/10 text-blue-200"
+        : tone === "red"
+          ? "border-bear/35 bg-bear/10 text-red-200"
+          : tone === "green"
+            ? "border-bull/35 bg-bull/10 text-green-200"
+            : "border-white/10 bg-white/5 text-neutral-200";
 
   return (
     <div className={`rounded-xl border p-4 ${toneClass}`}>
@@ -175,21 +175,9 @@ export function NewsExpectationDiagram() {
       subtitle="السوق يتحرك بقوة عندما تأتي النتيجة مختلفة عما كان المستثمرون مستعدين له."
     >
       <div className="grid gap-4 md:grid-cols-3">
-        <Node
-          title="أسوأ من المتوقع"
-          text="إعادة تسعير سلبية، ضغط بيع، أو هروب من المخاطر"
-          tone="red"
-        />
-        <Node
-          title="مطابق للتوقعات"
-          text="حركة محدودة أو جني أرباح لأن السوق كان مستعداً"
-          tone="gold"
-        />
-        <Node
-          title="أفضل من المتوقع"
-          text="إعادة تسعير إيجابية إذا لم تكن الحركة محسوبة مسبقاً"
-          tone="green"
-        />
+        <Node title="أسوأ من المتوقع" text="إعادة تسعير سلبية، ضغط بيع، أو هروب من المخاطر" tone="red" />
+        <Node title="مطابق للتوقعات" text="حركة محدودة أو جني أرباح لأن السوق كان مستعداً" tone="gold" />
+        <Node title="أفضل من المتوقع" text="إعادة تسعير إيجابية إذا لم تكن الحركة محسوبة مسبقاً" tone="green" />
       </div>
     </VisualShell>
   );
@@ -204,10 +192,7 @@ export function ParticipantsMap() {
     { title: "الخوارزميات", text: "سرعة، تنفيذ آلي، تفاعل لحظي", tone: "red" as const },
   ];
   return (
-    <VisualShell
-      title="خريطة المشاركين في السوق"
-      subtitle="كل لاعب يرى السوق من زاوية مختلفة: زمن مختلف، حجم مختلف، وهدف مختلف."
-    >
+    <VisualShell title="خريطة المشاركين في السوق" subtitle="كل لاعب يرى السوق من زاوية مختلفة: زمن مختلف، حجم مختلف، وهدف مختلف.">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {items.map((item) => (
           <Node key={item.title} {...item} />
@@ -254,21 +239,11 @@ export function OrderTypesVisual() {
     >
       <div className="rounded-xl border border-white/5 bg-ink-950/60 p-5">
         <div className="mx-auto max-w-2xl space-y-3">
-          <div className="rounded-lg border border-bull/30 bg-bull/10 p-3 text-sm text-green-200">
-            Buy Stop — فوق السعر الحالي مع سيناريو اختراق صاعد
-          </div>
-          <div className="rounded-lg border border-bear/30 bg-bear/10 p-3 text-sm text-red-200">
-            Sell Limit — بيع من منطقة أعلى إذا وصل السعر إليها
-          </div>
-          <div className="rounded-lg border border-gold/40 bg-gold/15 p-4 text-center font-mono text-lg font-bold text-gold">
-            السعر الحالي
-          </div>
-          <div className="rounded-lg border border-bull/30 bg-bull/10 p-3 text-sm text-green-200">
-            Buy Limit — شراء من منطقة أدنى إذا عاد السعر إليها
-          </div>
-          <div className="rounded-lg border border-bear/30 bg-bear/10 p-3 text-sm text-red-200">
-            Sell Stop — أسفل السعر الحالي مع سيناريو كسر هابط
-          </div>
+          <div className="rounded-lg border border-bull/30 bg-bull/10 p-3 text-sm text-green-200">Buy Stop — فوق السعر الحالي مع سيناريو اختراق صاعد</div>
+          <div className="rounded-lg border border-bear/30 bg-bear/10 p-3 text-sm text-red-200">Sell Limit — بيع من منطقة أعلى إذا وصل السعر إليها</div>
+          <div className="rounded-lg border border-gold/40 bg-gold/15 p-4 text-center font-mono text-lg font-bold text-gold">السعر الحالي</div>
+          <div className="rounded-lg border border-bull/30 bg-bull/10 p-3 text-sm text-green-200">Buy Limit — شراء من منطقة أدنى إذا عاد السعر إليها</div>
+          <div className="rounded-lg border border-bear/30 bg-bear/10 p-3 text-sm text-red-200">Sell Stop — أسفل السعر الحالي مع سيناريو كسر هابط</div>
         </div>
       </div>
     </VisualShell>
@@ -290,6 +265,54 @@ export function RiskRewardVisual() {
   );
 }
 
+export function PositionSizingVisual() {
+  return (
+    <VisualShell
+      title="كيف يتحول الانضباط إلى حجم صفقة؟"
+      subtitle="الحجم الصحيح لا يبدأ من الرغبة في الربح، بل من الخسارة المقبولة ثم مسافة وقف الخسارة."
+    >
+      <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-stretch">
+        <Node title="نسبة المخاطرة" text="كم تقبل أن تخسر من الحساب في الصفقة الواحدة؟" tone="gold" />
+        <Arrow />
+        <Node title="وقف الخسارة" text="أين تصبح الفكرة غير صحيحة؟" tone="red" />
+        <Arrow />
+        <Node title="حجم الصفقة" text="النتيجة الرقمية التي تجعل الخسارة منضبطة" tone="blue" />
+      </div>
+      <div className="mt-5 rounded-xl border border-white/5 bg-ink-950/50 p-4 text-sm leading-relaxed text-neutral-300">
+        الترتيب الصحيح: الخسارة المقبولة أولاً، ثم مسافة الوقف، ثم الحجم. إذا بدأت من اللوت، فأنت بدأت من الطموح لا من الخطة.
+      </div>
+    </VisualShell>
+  );
+}
+
+export function TradingPlanBoardVisual() {
+  return (
+    <VisualShell
+      title="لوحة الخطة قبل التنفيذ"
+      subtitle="كل صفقة منظمة يجب أن تمر عبر أسئلة ثابتة قبل الضغط على Buy أو Sell."
+    >
+      <div className="grid gap-4 lg:grid-cols-2">
+        <div className="rounded-xl border border-white/5 bg-white/[0.03] p-5">
+          <h4 className="font-display text-lg font-bold text-neutral-50">قبل الدخول</h4>
+          <div className="mt-4 space-y-3 text-sm text-neutral-300">
+            <div className="rounded-lg border border-white/5 bg-ink-950/50 p-3">ما هو السياق؟</div>
+            <div className="rounded-lg border border-white/5 bg-ink-950/50 p-3">أين تكون الفكرة خاطئة؟</div>
+            <div className="rounded-lg border border-white/5 bg-ink-950/50 p-3">كم سأخسر إذا ضُرب الوقف؟</div>
+          </div>
+        </div>
+        <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
+          <h4 className="font-display text-lg font-bold text-gold">قرار منضبط</h4>
+          <div className="mt-4 space-y-3 text-sm text-neutral-300">
+            <div className="rounded-lg border border-gold/15 bg-white/[0.03] p-3">الحجم ناتج عن الخطة لا عن الحماس</div>
+            <div className="rounded-lg border border-gold/15 bg-white/[0.03] p-3">العائد منطقي مقارنة بالمخاطرة</div>
+            <div className="rounded-lg border border-gold/15 bg-white/[0.03] p-3">إذا لم تتضح الإجابات، فلا صفقة</div>
+          </div>
+        </div>
+      </div>
+    </VisualShell>
+  );
+}
+
 export function ForexPairVisual() {
   return (
     <VisualShell
@@ -302,7 +325,7 @@ export function ForexPairVisual() {
           <div className="font-mono text-3xl font-bold text-neutral-50">EUR/USD</div>
           <div className="mt-2 text-xs text-neutral-400">إذا ارتفع الزوج، اليورو يقوى أمام الدولار</div>
         </div>
-        <Node title="USD" text="عملة التسعير: العملة التي تقيس بها قيمة اليورو" tone="blue" />
+        <Node title="USD" text="عملة التسعير: العملة الثانية التي تقيس بها قيمة العملة الأولى" tone="blue" />
       </div>
     </VisualShell>
   );
@@ -344,12 +367,8 @@ export function PipLotVisual() {
       <div className="grid gap-4 lg:grid-cols-2">
         <div className="rounded-xl border border-gold/25 bg-gold/5 p-5">
           <h4 className="font-display text-lg font-bold text-gold">Pip</h4>
-          <div className="mt-4 rounded-lg bg-ink-950/60 p-4 font-mono text-xl text-neutral-50">
-            EUR/USD: 1.0850 → 1.0860
-          </div>
-          <p className="mt-3 text-sm leading-relaxed text-neutral-300">
-            الحركة هنا تساوي 10 نقاط تقريباً في أغلب أزواج العملات ذات أربع خانات عشرية.
-          </p>
+          <div className="mt-4 rounded-lg bg-ink-950/60 p-4 font-mono text-xl text-neutral-50">EUR/USD: 1.0850 → 1.0860</div>
+          <p className="mt-3 text-sm leading-relaxed text-neutral-300">الحركة هنا تساوي 10 نقاط تقريباً في أغلب أزواج العملات ذات أربع خانات عشرية.</p>
         </div>
         <div className="rounded-xl border border-electric/25 bg-electric/5 p-5">
           <h4 className="font-display text-lg font-bold text-blue-200">Lot</h4>
@@ -358,9 +377,7 @@ export function PipLotVisual() {
             <div className="rounded-lg bg-white/5 p-3">Mini Lot = 0.10</div>
             <div className="rounded-lg bg-white/5 p-3">Standard Lot = 1.00</div>
           </div>
-          <p className="mt-3 text-sm leading-relaxed text-neutral-300">
-            كلما كبر حجم اللوت، زادت قيمة الربح والخسارة لكل نقطة.
-          </p>
+          <p className="mt-3 text-sm leading-relaxed text-neutral-300">كلما كبر حجم اللوت، زادت قيمة الربح والخسارة لكل نقطة.</p>
         </div>
       </div>
     </VisualShell>
