@@ -7,25 +7,33 @@ import { MarketStructureDiagram, ParticipantsMap } from "@/components/AcademyVis
 export const metadata = {
   title: "الأكاديمية - تعلّم الأسواق المالية",
   description:
-    "بوابة تعليمية عربية منظمة لمسارات الأسواق المالية: أساسيات السوق، الفوركس، الأسهم، السلع، التحليل، إدارة المخاطر، وسيكولوجية التداول.",
+    "بوابة تعليمية عربية منظمة لمسارات الأسواق المالية: أساسيات السوق، الفوركس، إدارة المخاطر، التحليل، والأسهم والسلع.",
 };
 
 const activeTracks = [
   {
     title: "أساسيات السوق",
     description:
-      "ابدأ هنا لفهم آلية السوق، حركة الأسعار، المشاركين، الأصول، السيولة، والتذبذب.",
+      "مسار تأسيسي مكتمل يشرح آلية السوق، حركة الأسعار، المشاركين، الأصول، السيولة، والقيمة.",
     href: "/academy/market-basics",
     lessons: "8 دروس",
-    status: "قيد البناء",
+    status: "مكتمل",
   },
   {
     title: "الفوركس للمبتدئين",
     description:
-      "مسار مكتمل يشرح سوق العملات من الصفر: الأزواج، السبريد، اللوت، الرافعة، الأخبار، وإدارة المخاطر.",
+      "مسار عربي منظم يشرح سوق العملات من الصفر: الأزواج، السبريد، اللوت، الرافعة، الأخبار، والخطة.",
     href: "/academy/forex-basics",
     lessons: "12 درس",
-    status: "مكتمل",
+    status: "المسار الرئيسي",
+  },
+  {
+    title: "إدارة المخاطر",
+    description:
+      "المحور الثالث في الأكاديمية: حماية رأس المال، حجم الصفقة، حدود الخسارة، والانضباط العددي قبل أي تطبيق.",
+    href: "/academy/risk-management",
+    lessons: "6 دروس",
+    status: "بدأ التنفيذ",
   },
 ];
 
@@ -35,7 +43,7 @@ export default function AcademyPage() {
       <PageHeader
         eyebrow="الأكاديمية"
         title="بوابة تعليمية منظمة للأسواق"
-        description="ادخل إلى المسارات الصحيحة مباشرة: كل قسم له صفحة مستقلة ودروس مرتبة، بدون روابط متفرقة أو محتوى مكرر."
+        description="ادخل إلى المسارات الصحيحة مباشرة: كل قسم له صفحة مستقلة ودروس مرتبة، بصياغة واضحة ومسار تعلم تدريجي متناسق."
       />
 
       <section className="container-custom py-12">
@@ -52,24 +60,24 @@ export default function AcademyPage() {
                 المسارات النشطة الآن
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-relaxed text-neutral-400 sm:text-base">
-                نظّفنا بنية الأكاديمية حتى لا يجد الزائر روابط متفرقة أو دروساً خارج مسارها. كل محتوى تعليمي يبدأ من صفحة مسار واضحة.
+                الأكاديمية مبنية على مسارات واضحة بدل الروابط المتفرقة. ابدأ من الأساسيات، ثم الفوركس، ثم انتقل إلى إدارة المخاطر وبقية المحاور تدريجيًا.
               </p>
             </div>
             <div className="lg:col-span-4">
               <div className="grid grid-cols-2 gap-3 text-center">
                 <div className="rounded-xl border border-white/5 bg-white/5 p-4">
-                  <div className="font-mono text-2xl font-bold text-gold">2</div>
+                  <div className="font-mono text-2xl font-bold text-gold">3</div>
                   <div className="mt-1 text-xs text-neutral-500">مسارات نشطة</div>
                 </div>
                 <div className="rounded-xl border border-white/5 bg-white/5 p-4">
-                  <div className="font-mono text-2xl font-bold text-gold">20</div>
+                  <div className="font-mono text-2xl font-bold text-gold">26</div>
                   <div className="mt-1 text-xs text-neutral-500">درساً منظماً</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-9 grid gap-5 lg:grid-cols-2">
+          <div className="mt-9 grid gap-5 lg:grid-cols-3">
             {activeTracks.map((track) => (
               <Link
                 key={track.href}
@@ -110,7 +118,7 @@ export default function AcademyPage() {
         <div className="mt-16">
           <h2 className="section-title text-3xl">كل أقسام الأكاديمية</h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-neutral-400">
-            هذه هي الخريطة الكاملة للأقسام. الأقسام المكتملة أو قيد البناء ستفتح على مساراتها، أما الأقسام القادمة فسيتم إغناؤها تدريجياً دون تكرار المحتوى.
+            هذه هي الخريطة الكاملة للأقسام. المسارات المنشطة تُغذّى تدريجيًا بمحتوى متناسق، أما المحاور القادمة فسيتم تطويرها وفق نفس المستوى التحريري والبصري.
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
