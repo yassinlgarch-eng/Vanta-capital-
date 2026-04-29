@@ -8,7 +8,7 @@ import {
 } from "@/components/AcademyVisuals";
 
 export const metadata = {
-  title: "أساسيات السوق - أكاديمية Vanta Capital",
+  title: "أساسيات السوق - أكاديمية Usus Markets",
   description:
     "مسار عربي مبسط لفهم الأسواق المالية من الصفر: ما هو السوق، لماذا تتحرك الأسعار، من يشارك في السوق، وما الفرق بين الأصول المالية.",
 };
