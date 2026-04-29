@@ -4,16 +4,17 @@ import Link from "next/link";
 import { useState } from "react";
 import Logo from "./Logo";
 
-const navItems = [
+const primaryNavItems = [
   { href: "/news", label: "الأخبار" },
-  { href: "/forex", label: "الفوركس" },
-  { href: "/stocks", label: "الأسهم" },
-  { href: "/commodities", label: "السلع" },
   { href: "/analysis", label: "التحليلات" },
   { href: "/academy", label: "الأكاديمية" },
-  { href: "/tools", label: "الأدوات" },
   { href: "/library", label: "المكتبة" },
+];
+
+const secondaryNavItems = [
   { href: "/community", label: "المجتمع" },
+  { href: "/about", label: "من نحن" },
+  { href: "/contact", label: "تواصل" },
 ];
 
 export default function Header() {
@@ -25,7 +26,7 @@ export default function Header() {
         <Logo />
 
         <nav className="hidden items-center gap-1 lg:flex">
-          {navItems.map((item) => (
+          {primaryNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -37,24 +38,21 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <Link
-            href="/ai"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-electric/30 bg-electric/10 px-3 py-2 text-sm font-semibold text-blue-200 transition-all hover:border-electric/60 hover:bg-electric/15"
-          >
-            AI
-          </Link>
+          {secondaryNavItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-md px-2.5 py-2 text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-200"
+            >
+              {item.label}
+            </Link>
+          ))}
           <Link
             href="/search"
             aria-label="بحث داخل الموقع"
             className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-neutral-300 transition-all hover:border-gold/30 hover:text-gold"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="h-4.5 w-4.5"
-            >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4.5 w-4.5">
               <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
               <circle cx="11" cy="11" r="7" />
             </svg>
@@ -66,30 +64,17 @@ export default function Header() {
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
               <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm2.7-2h8.6l.9-5.4-3.6 3.3L12 8.5l-1.6 3.4L6.8 8.6 7.7 14z" />
             </svg>
-            ركن VIP
+            VIP
           </Link>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
           <Link
-            href="/ai"
-            aria-label="Usus AI"
-            className="grid h-10 w-10 place-items-center rounded-lg border border-electric/20 bg-electric/10 text-blue-200"
-          >
-            AI
-          </Link>
-          <Link
             href="/search"
             aria-label="بحث داخل الموقع"
             className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5 text-neutral-50"
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              className="h-5 w-5"
-            >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
               <path d="M21 21l-4.35-4.35" strokeLinecap="round" />
               <circle cx="11" cy="11" r="7" />
             </svg>
@@ -102,13 +87,7 @@ export default function Header() {
             className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 bg-white/5"
             onClick={() => setOpen(!open)}
           >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              className="h-5 w-5 text-neutral-50"
-            >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-neutral-50">
               {open ? (
                 <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
               ) : (
@@ -122,7 +101,7 @@ export default function Header() {
       {open && (
         <div className="border-t border-white/5 bg-ink-950 lg:hidden">
           <nav className="container-custom flex flex-col gap-1 py-4">
-            {navItems.map((item) => (
+            {primaryNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -132,20 +111,17 @@ export default function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="/ai"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-blue-200 transition-colors hover:bg-electric/10"
-            >
-              Usus AI
-            </Link>
-            <Link
-              href="/search"
-              onClick={() => setOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-300 transition-colors hover:bg-white/5 hover:text-neutral-50"
-            >
-              البحث
-            </Link>
+            <div className="my-2 border-t border-white/5" />
+            {secondaryNavItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-400 transition-colors hover:bg-white/5 hover:text-neutral-50"
+              >
+                {item.label}
+              </Link>
+            ))}
             <Link
               href="/vip"
               onClick={() => setOpen(false)}
@@ -154,7 +130,7 @@ export default function Header() {
               <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z" />
               </svg>
-              ركن VIP
+              VIP
             </Link>
           </nav>
         </div>
