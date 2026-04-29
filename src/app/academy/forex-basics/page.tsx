@@ -9,7 +9,7 @@ import {
 } from "@/components/AcademyVisuals";
 
 export const metadata = {
-  title: "الفوركس للمبتدئين - أكاديمية Vanta Capital",
+  title: "الفوركس للمبتدئين - أكاديمية Usus Markets",
   description:
     "مسار عربي مبسط واحترافي لتعلم الفوركس من الصفر: أزواج العملات، النقطة، اللوت، السبريد، الرافعة، الهامش، وإدارة المخاطر.",
 };
